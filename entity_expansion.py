@@ -1,5 +1,7 @@
+from distutils.log import warn
 import requests
 import json
+import re
 
 """
 This module contains methods to retrieve entities
@@ -8,10 +10,14 @@ RDF nodes that match the answer type to a question
 and generate sentences to extend entity descriptions
 """
 
+SPARQL_URL = "http://dbpedia.org/sparql"
+ELAS4RDF_SEARCH_URL = "http://localhost:8080/elas4rdf-rest-0.0.1-SNAPSHOT"
+
 def sparql_query(query_string):
     # Execute a query on a SPARQL endpoint
-    #url = "http://139.91.183.46:8899/sparql"
-    url = "http://dbpedia.org/sparql"
+    # url = "http://139.91.183.46:8899/sparql"
+    # url = "http://dbpedia.org/sparql"
+    url = SPARQL_URL
     payload = {
         "query": query_string,
         "default-graph-uri": "http://dbpedia.org"
@@ -96,20 +102,38 @@ def entity_to_str(e):
 
 def get_entities_from_elas4rdf(query, size=1000):
     """
-    Get the list of entities from the elas4rdf search service
+    Get entities from the elas4rdf search service
     The parameter 'size' defines the number of triples to use to create the entities
     """
-    url = "https://demos.isl.ics.forth.gr/elas4rdf/entities_json"
+    url = ELAS4RDF_SEARCH_URL + "/high-level"
+    # the id of the elastic search index
+    index_id = "cidoc_crm"
+    
     payload = {
+        "id":index_id,
         "query": query,
         "size": str(size)
     }
+    
     headers = {"Accept":"application/json"}
     response = requests.get(url,params=payload,headers=headers)
+    
+    response_json = response.json()
+
     try:
-        response_json =  response.json()
-        entities = [{'uri':e['entity'],'rdfs_comment':e['ext']['rdfs_comment']} for e in response_json['results']['entities']]
-    except json.decoder.JSONDecodeError:
-        print("error from elas4rdf search service")
-        entities = [] 
-    return entities
+        triples = response_json["results"]["triples"]
+        filtered_triples = list(filter(lambda t: t["sub_ext"] ,triples)) 
+        
+        entities =  [{
+            "uri" : t["sub"],
+            "uri_keywords" : t["sub_keywords"],
+            "ext" : t["sub_ext"],
+            "text" : re.sub(r"[\[\]]","",t["sub_ext"]["description"]).strip() if "description" in t["sub_ext"] else "",
+            "score":t["score"]
+        } for t in filtered_triples]
+        
+        # filter dublicate subjects in triples   
+        return list({e["uri"]:e for e in entities}.values())
+    except Exception as error : 
+        print(error)
+        return []
