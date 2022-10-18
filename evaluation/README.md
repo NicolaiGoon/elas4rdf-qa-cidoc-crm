@@ -1,7 +1,8 @@
-This folder contains data and scripts used to evaluate the system over the [WebQuestions](https://worksheets.codalab.org/worksheets/0xba659fe363cb46e7a505c5b6a774dc8a) collection.
+This folder contains data and scripts used to evaluate the system.
 
 Files:
-* `webquestions.test.json` WebQuestions test collection
+
+* `webquestions.test.json` WebQuestions
 * `convert.py` Script to convert the collection to the format used by the other scripts
 * `webquestions_test_converted.json` The collection converted using `convert.py`
 * `get_system_output.py` script to obtain answers for all the questions in the collection (takes a long time to complete)

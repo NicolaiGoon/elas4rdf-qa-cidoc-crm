@@ -2,12 +2,12 @@ import requests
 import json
 import sys
 
-qa_url = 'http://139.91.183.96:5000/answer'
-output_file = 'system_output.json'
+qa_url = 'http://127.0.0.1:5000/answer'
+output_file = './evaluation_webquestions/system_output.json'
 
 dataset = []
-with open('webquestions_test_converted.json', encoding='utf8') as json_file:
-    dataset = json.load(json_file)[0:100]
+with open('./evaluation_webquestions/evalcoll.json', encoding='utf8') as json_file:
+    dataset = json.load(json_file)
 
 try:
     with open(output_file, encoding='utf8') as json_file:
@@ -37,7 +37,10 @@ for q in dataset:
     except json.decoder.JSONDecodeError:
         print(r.text)
         sys.exit(1)
-    answered.append(response)
-    print(response)
+    answered.append({
+        "id":q["id"],
+        "question":q["question"],
+        "answers": response["answers"]
+    })
     with open(output_file, 'w') as outfile:
         json.dump(answered, outfile)

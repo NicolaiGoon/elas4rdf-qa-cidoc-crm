@@ -65,7 +65,7 @@ def make_eval_dict(scores):
 def main():
     with open(system_output_path, encoding="utf8") as jsonfile:
         system_output = json.load(jsonfile)
-    with open("webquestions_test_converted.json", encoding="utf8") as jsonfile:
+    with open("./evaluation_webquestions/evalcoll.json", encoding="utf8") as jsonfile:
         ground_truth = json.load(jsonfile)
     scores = []
     total_counter = 0

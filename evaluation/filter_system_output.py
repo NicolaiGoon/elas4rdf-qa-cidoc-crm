@@ -8,7 +8,7 @@ import json
 import sys
 
 dataset = []
-with open('system_output.json', encoding='utf8') as json_file:
+with open('evaluation_webquestions/system_output.json', encoding='utf8') as json_file:
     dataset = json.load(json_file)
 
 out2 = []
@@ -24,5 +24,5 @@ for q in dataset:
     	"answers": newans
     })
 
-with open('system_output_filtered.json', 'w') as outfile:
+with open('./evaluation_webquestions/system_output_filtered.json', 'w') as outfile:
     json.dump(out2, outfile)
