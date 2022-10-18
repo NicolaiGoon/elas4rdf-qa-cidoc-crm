@@ -6,7 +6,7 @@ qa_url = 'http://127.0.0.1:5000/answer'
 output_file = './evaluation_webquestions/system_output.json'
 
 dataset = []
-with open('./evaluation_webquestions/evalcoll.json', encoding='utf8') as json_file:
+with open('./evaluation/evalcoll.json', encoding='utf8') as json_file:
     dataset = json.load(json_file)
 
 try:
