@@ -1,7 +1,10 @@
+from copy import copy
 from distutils.log import warn
 import requests
 import json
 import re
+import copy
+import time
 
 """
 This module contains methods to retrieve entities
@@ -10,7 +13,7 @@ RDF nodes that match the answer type to a question
 and generate sentences to extend entity descriptions
 """
 
-SPARQL_URL = "http://dbpedia.org/sparql"
+SPARQL_URL = "http://127.0.0.1:8890/sparql"
 ELAS4RDF_SEARCH_URL = "http://localhost:8080/elas4rdf-rest-0.0.1-SNAPSHOT"
 
 def sparql_query(query_string):
@@ -20,11 +23,12 @@ def sparql_query(query_string):
     url = SPARQL_URL
     payload = {
         "query": query_string,
-        "default-graph-uri": "http://dbpedia.org"
+        "default-graph-uri": "http://localhost:8890/cidoc-crm"
     }
     headers = {"Accept":"application/json"}
     response = requests.get(url,params=payload,headers=headers)
     try:
+        # normal 
         response_json =  response.json()
         keys = response_json['head']['vars']
         results = []
@@ -33,10 +37,16 @@ def sparql_query(query_string):
             for k in keys:
                 result[k] = b[k]['value']
             results.append(result)
-    except json.decoder.JSONDecodeError:
-        print("sparql error")
-        results = [] 
+    except:
+        # graph cosntruction
+        try:
+            results = response.json()
+        except:    
+            print("sparql error")
+            results = [] 
     return results
+
+
 
 def resource_sentences(entity_uri,type_uri):
     """ Find subjects of the entity that match the answer type
@@ -137,3 +147,96 @@ def get_entities_from_elas4rdf(query, size=1000):
     except Exception as error : 
         print(error)
         return []
+
+def expandEntitiesPath(entities,depth=1):   
+    '''
+    Expands entity description with triples derived from the entity path 
+    '''
+    
+    if(depth == 1):
+        query = ("construct {{"
+        "?s ?p ?o ."
+        "}}"
+        "where {{"
+        "bind(<{0}> as ?s) ."
+        "?s ?p ?o ."
+        "}}")
+    elif(depth == 2):
+        query = ("construct {{"
+        "?s ?p ?o ."
+        "?o ?p2 ?o2 ."
+        "}}"
+        "where {{"
+        "bind(<{0}> as ?s) ."
+        "?s ?p ?o ."
+        "optional {{"
+        "?o ?p2 ?o2 ."
+        "}}"
+        "}}")
+    elif(depth == 3):
+        query = ("construct {{"
+        "?s ?p ?o ."
+        "?o ?p2 ?o2 ."
+        "?o2 ?p3 ?o3 ."
+        "}}"
+        "where {{"
+        "bind(<{0}> as ?s) ."
+        "?s ?p ?o ."
+        "optional {{"
+        "?o ?p2 ?o2 ."
+        "optional {{"
+            "?o2 ?p3 ?o3 ."
+            "}}"
+        "}}"
+        "}}")
+    else:
+        raise Exception("depth must be in the range of 1-3")
+
+    extended = []
+    start = time.time()
+    for e in entities:
+        subgTime = time.time()
+        subgraph = sparql_query(query.format(e["uri"]))
+        subgTime = time.time() - subgTime
+        print("Subgraph construction  for {0} took: {1}".format(e['uri'],subgTime))
+        text = cidocGraphToText(subgraph)
+        ext = copy.deepcopy(e)
+        ext['text'] += ' ' + text
+        extended.append(ext)
+    end = time.time()
+    print("Entity Path expand took: {0}".format(end-start))
+    return extended
+
+def cidoc_uri_to_str(e):
+    '''
+    Convert a cidoc-crm uri to a readable string
+    '''
+    strip_prefix = re.sub(r'^[A-Za-z0-9]*_','',e[e.rindex("/")+1:])
+    return strip_prefix.replace('_',' ')
+
+def cidocGraphToText(g,labelName="prefLabel"):
+    '''
+    Converts a cidoc-crm subgraph to text by connecting the triples and replacing ids with labels
+    '''
+
+    # label id map
+    labelDict = dict()
+    text = ""
+    for s in g:
+        for p in g[s]:
+            # add triple
+            if("cidoc-crm" in p):
+                objects = ""
+                for o in g[s][p]: 
+                    if(o["type"] == "uri"):
+                        objects += o["value"] + ", "
+                # replace last comma and replace the previous one with an "and"
+                objects =  ' and '.join(objects[:-2].rsplit(",",1))
+                text += " "+s+" "+cidoc_uri_to_str(p)+" "+objects+"."
+            # add label to the dictionary
+            elif(labelName in p):
+                labelDict[s]  = g[s][p][0]["value"]
+    # replace id with label
+    for key in labelDict:
+        text = text.replace(key,labelDict[key])
+    return re.sub(r'\s{2,}',' ',text).replace(" .",".")

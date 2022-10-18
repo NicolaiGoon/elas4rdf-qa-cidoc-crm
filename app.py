@@ -2,7 +2,8 @@ import flask
 from flask import request, jsonify
 from answer_extraction import AnswerExtraction
 from answer_type_prediction import AnswerTypePrediction
-from entity_expansion import get_entities_from_elas4rdf
+from entity_expansion import expandEntitiesPath, get_entities_from_elas4rdf, get_entities_from_elas4rdf
+import entity_expansion
 import json
 
 app = flask.Flask(__name__)
@@ -25,27 +26,32 @@ def api_answer():
     else:
         error_output = {'error':True}
         return jsonify(error_output)
-
+   
     entities = get_entities_from_elas4rdf(question)
+
+
     """
     to improve performance when we receive a large number of entities
     we use only the first 10
     """
     if len(entities)>10:
-        entities = entities[0:10]
+        entities = entities[0:3]
 
-    found_category, found_type = atp.classify_category(question)
-    if found_category == "resource":
-        found_types = atp.classify_resource(question)[0:10]
-    else:
-        found_types = [found_type]
+    # found_category, found_type = atp.classify_category(question)
+    # if found_category == "resource":
+    #     found_types = atp.classify_resource(question)[0:10]
+    # else:
+    #     found_types = [found_type]
     
-    extended_entities = ae.extend_entities(entities,found_category,found_types[0])
-    answers = ae.answer_extractive(question,extended_entities)
+    # extended_entities = ae.extend_entities(entities,found_category,found_types[0])
+
+    entities = expandEntitiesPath(entities,depth=3)
+    # return jsonify(entities)
+    answers = ae.answer_extractive(question,entities)
     
     response = {
-        "category":found_category,
-        "types":found_types[0],
+        # "category":found_category,
+        # "types":found_types[0],
         "answers":answers
     }
 
