@@ -1,5 +1,4 @@
 from transformers import DistilBertTokenizer, DistilBertForQuestionAnswering, QuestionAnsweringPipeline
-import torch
 import entity_expansion as expansion
 
 class AnswerExtraction:
@@ -17,9 +16,19 @@ class AnswerExtraction:
         # Obtain a question from each given entity
         answers = []
         for e in entities:
-            print('ans'+e['uri'])
-            if e['text'] != '' or e['text'] != ' ':  
+            print('ans '+e['uri'])
+            # print(e)
+            # emtpy text
+            if e['text'] == '' or e['text'] == ' ':  
+                answers.append({
+                    'entity':e['uri'],
+                    'answer':'',
+                    'score':0,
+                    'text':''
+                    })
+            else:
                 output = self.pipeline(question,e['text'])
+                # cant find answer
                 if output == []:
                     answers.append({
                     'entity':e['uri'],
@@ -37,25 +46,29 @@ class AnswerExtraction:
                         })
         return sorted(answers, key=lambda k: k['score'],reverse=True) 
 
-    def extend_entities(self,entities,category,atype):
+    def extend_entities(self,entities,category,atype,depth=2):
         # Extend entity descriptions with RDF nodes matching the answer type
         extended = []
-        for e in entities:
-            print('ext'+e['uri'])
-            if(category=='literal'):
-                sentences = expansion.literal_sentences(e['uri'],atype)
-            elif(category=='resource'):
-                type_uri = 'http://dbpedia.org/ontology/'+atype
-                sentences = expansion.resource_sentences(e['uri'],type_uri)
-            else:
-                sentences = []
-            if(e['rdfs_comment'] == "[]"):
-                clean_rdfs_comment = ""
-            else:
-                clean_rdfs_comment = e['rdfs_comment'][3:-4]
-            new_text = clean_rdfs_comment + ". ".join(sentences)
-            extended.append({
-                'uri':e['uri'],
-                'text':new_text
-                })
+
+        if(category=='resource'):
+            # type_uri = 'http://dbpedia.org/ontology/'+atype
+            # sentences = expansion.resource_sentences(e['uri'],type_uri)
+            return expansion.expandEntitiesPath(entities,depth)
+        else:
+            for e in entities:
+                print('ext '+e['uri'])
+                if(category=='literal'):
+                    sentences = expansion.literal_sentences(e['uri'],atype)
+                else:
+                    sentences = []
+                if(e['text'] == "[]"):
+                    clean_rdfs_comment = ""
+                else:
+                    clean_rdfs_comment = e['text'][3:-4]
+                new_text = clean_rdfs_comment + ". ".join(sentences)
+                # print(new_text)
+                extended.append({
+                    'uri':e['uri'],
+                    'text':new_text
+                    })
         return extended

@@ -35,17 +35,17 @@ def api_answer():
     we use only the first 10
     """
     if len(entities)>10:
-        entities = entities[0:3]
+        entities = entities[0:10]
 
-    # found_category, found_type = atp.classify_category(question)
+    found_category, found_type = atp.classify_category(question)
+    print(found_category,found_type)
     # if found_category == "resource":
     #     found_types = atp.classify_resource(question)[0:10]
     # else:
     #     found_types = [found_type]
     
-    # extended_entities = ae.extend_entities(entities,found_category,found_types[0])
+    entities = ae.extend_entities(entities,found_category,found_type)
 
-    entities = expandEntitiesPath(entities,depth=3)
     # return jsonify(entities)
     answers = ae.answer_extractive(question,entities)
     
