@@ -23,8 +23,8 @@ class AnswerTypePrediction:
         self.label_to_id = label_to_id
         self.category_tokenizer = DistilBertTokenizer.from_pretrained(category_model_dir)
         self.category_model = DistilBertForSequenceClassification.from_pretrained(category_model_dir,num_labels=5)
-        self.resource_tokenizer = DistilBertTokenizer.from_pretrained(resource_model_dir)
-        self.resource_model = DistilBertForSequenceClassification.from_pretrained(resource_model_dir,num_labels=len(id_to_label))
+        # self.resource_tokenizer = DistilBertTokenizer.from_pretrained(resource_model_dir)
+        # self.resource_model = DistilBertForSequenceClassification.from_pretrained(resource_model_dir,num_labels=len(id_to_label))
         hierarchy = {}
         with open(hierarchy_json) as json_file:
             hierarchy = json.load(json_file)
@@ -39,7 +39,6 @@ class AnswerTypePrediction:
         categories = ['boolean','literal','literal','literal','resource']
         types = ['boolean','date','number','string','']
         return categories[result], types[result]
-
 
     def classify_resource(self,q):
         input_ids = torch.tensor(self.resource_tokenizer.encode(q, add_special_tokens=True)).unsqueeze(0)  # Batch size 1
