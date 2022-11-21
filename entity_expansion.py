@@ -66,32 +66,52 @@ def literal_sentences(entity_uri,literal_type):
     sentences = []
     # entity_string = entity_to_str(entity_uri)
     if literal_type == 'date':
-        query_string = ("PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
-                      "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-                      "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"
-                        "select ?sL (str(?answer) as ?a) (str(?pl) as ?pLabel) where {{"
-                        "<{0}> ?p ?answer . "
-                        "?p rdfs:range xsd:date . "
-                        "<{0}> skos:prefLabel ?sL . "
-                        "?p rdfs:label ?pl . "
-                        "FILTER(isLiteral(?answer)) "
-                        "FILTER(lang(?pl) = 'en' || lang(?pl) = '') "
-                        "}}").format(entity_uri)  
+        query_string = (
+        "PREFIX crm: <http://www.cidoc-crm.org/cidoc-crm/>"
+        "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"
+        "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
+        "prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+        "select ?sL (str(?answer) as ?a) (str(?pl) as ?pLabel) where {{"
+        "{{"
+        "	<{0}> ?p ?answer ; skos:prefLabel ?sL ."
+            "?p rdfs:range xsd:date . "
+            "?p rdfs:label ?pl ." 
+            "FILTER(isLiteral(?answer)) "
+            "FILTER(lang(?pl) = 'en' || lang(?pl) = '') "
+        "}}"
+        "UNION {{"
+            "<{0}> crm:P4_has_time-span ?ts ; skos:prefLabel ?sL ."
+            "FILTER(lang(?sL) = 'en' || lang(?sL) = '') ."
+            "?ts ?pl ?answer ."
+            "FILTER ( datatype(?answer) = xsd:date || datatype(?answer) = xsd:string) ."
+        "}}"
+        "}}").format(entity_uri)  
         response = sparql_query(query_string)     
         if(response == []): return ""
         for r in response["results"]["bindings"]:
-            sentences.append(r['sL']["value"]+' '+r['pLabel']["value"]+' '+r['a']["value"])
-    else: # if number or string
+            prop = r['pLabel']["value"]
+            if("cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin" in prop): prop = "began on"
+            elif("cidoc-crm.org/cidoc-crm/P82b_end_of_the_end" in prop): prop = "ended at"
+            elif("www.w3.org/2004/02/skos/core#prefLabel" in prop): prop = "has time span"
+            sentences.append(r['sL']["value"]+' '+prop+' '+r['a']["value"])
+    else: # if number or string or boolean
+        if(literal_type == "string" or literal_type == "number"):
+            xsdType = "string"
+        else:
+            xsdType = "boolean" 
+         
         query_string = ("PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
                       "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+                      "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>"
                         "select ?sL (str(?answer) as ?a) (str(?pl) as ?pLabel) where {{"
                         "<{0}> ?p ?answer . "
                         "?p rdfs:range ?answerType . "
                         "<{0}> skos:prefLabel ?sL . "
                         "?p rdfs:label ?pl . "
                         "FILTER(isLiteral(?answer)) "
+                        "FILTER ( datatype(?answer) = xsd:{1}) ."
                         "FILTER(lang(?pl) = 'en' || lang(?pl) = '') "
-                        "}}").format(entity_uri)         
+                        "}}").format(entity_uri,xsdType)         
         response = sparql_query(query_string)
         if(response == []): return ""
         if len(response["results"]["bindings"]) > 20:
@@ -101,7 +121,7 @@ def literal_sentences(entity_uri,literal_type):
                 isNumber = r['a']["value"].replace('.','',1).isdigit()
                 if(literal_type == 'number' and isNumber):
                     sentences.append(r['sL']["value"]+' '+r['pLabel']["value"]+' '+r['a']["value"])
-                elif(literal_type =='string' and (not isNumber)):
+                else:
                     sentences.append(r['sL']["value"]+' '+r['pLabel']["value"]+' '+r['a']["value"])
 
     return sentences
@@ -110,7 +130,7 @@ def entity_to_str(e):
     # Convert a dbpedia uri to a readable string
     return e[e.rindex("/")+1:].replace('_',' ')
 
-def get_entities_from_elas4rdf(query, size=1000):
+def get_entities_from_elas4rdf(query,description_label,size=1000):
     """
     Get entities from the elas4rdf search service
     The parameter 'size' defines the number of triples to use to create the entities
@@ -133,15 +153,14 @@ def get_entities_from_elas4rdf(query, size=1000):
     try:
         triples = response_json["results"]["triples"]
         filtered_triples = list(filter(lambda t: t["sub_ext"] ,triples)) 
-        
         entities =  [{
             "uri" : t["sub"],
             "uri_keywords" : t["sub_keywords"],
             "ext" : t["sub_ext"],
-            "text" : re.sub(r"[\[\]]","",t["sub_ext"]["description"]).strip() if "description" in t["sub_ext"] else "",
+            "text" : re.sub(r"[\[\]]|@.+"," ",t["sub_ext"][description_label]).strip() if description_label in t["sub_ext"] else "",
             "score":t["score"]
         } for t in filtered_triples]
-        
+
         # filter dublicate subjects in triples   
         return list({e["uri"]:e for e in entities}.values())
     except Exception as error : 
@@ -218,13 +237,13 @@ def expandEntitiesPath(entities,depth=1):
         # print(q_formatted)
         subgraph = sparql_query(q_formatted,headers="application/ld+json")
         subgTime = time.time() - subgTime
-        print("Subgraph construction  for {0} took: {1}".format(e['uri'],subgTime))
+        # print("Subgraph construction  for {0} took: {1}".format(e['uri'],subgTime))
         text = cidocGraphToText(subgraph)
         ext = copy.deepcopy(e)
         ext['text'] += ' ' + text
         extended.append(ext)
     end = time.time()
-    print("Entity Path expand took: {0}".format(end-start))
+    # print("Entity Path expand took: {0}".format(end-start))
     return extended
 
 def cidoc_uri_to_str(e):
