@@ -45,12 +45,12 @@ def api_answer():
 
     # ATP
     
-    # start = time.time()
-    # found_category, found_type = atp.classify_category(question)
-    # end = time.time()
-    # atp_time = end-start
-    # print(found_category,found_type)
-    # print("Answer type prediction: ",atp_time)
+    start = time.time()
+    found_category, found_type = atp.classify_category(question)
+    end = time.time()
+    atp_time = end-start
+    print(found_category,found_type)
+    print("Answer type prediction: ",atp_time)
 
     # if found_category == "resource":
     #     found_types = atp.classify_resource(question)[0:10]
@@ -59,16 +59,19 @@ def api_answer():
 
     found_category = None
     found_type = None
-    atp_time = 0
+    # atp_time = 0
 
     start = time.time()
     # depth  2 3 4 5
-    entities = ae.extend_entities(entities,found_category,found_type,depth=5)
+    entities = ae.extend_entities(entities,found_category,found_type,depth=3)
     end = time.time()
     ea_time = end-start
     print("Entity expansion: ",ea_time)
     # return jsonify(entities)
     
+    # ea_time = 0
+
+
     start = time.time()
     answers = ae.answer_extractive(question,entities)
     end = time.time()
