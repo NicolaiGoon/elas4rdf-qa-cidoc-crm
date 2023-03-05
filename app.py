@@ -1,98 +1,168 @@
-import flask
-from flask import request, jsonify
-from answer_extraction import AnswerExtraction
-from answer_type_prediction import AnswerTypePrediction
-from entity_expansion import expandEntitiesPath, get_entities_from_elas4rdf, get_entities_from_elas4rdf
-import entity_expansion
 import json
 import time
 
+import flask
+from flask import jsonify, request
+
+from answer_extraction import AnswerExtraction
+from entity_expansion import get_entities_from_elas4rdf
+
 app = flask.Flask(__name__)
 # Initialize answer extraction and answer type prediction components
-print('Initializing...')
+print("Initializing...")
 ae = AnswerExtraction()
-atp = AnswerTypePrediction()
-try:
-    with open("./performance.log.json", encoding='utf8') as out:
-        log = json.load(out)
-except FileNotFoundError:
-    log = []
-print('\tDONE')
 
 """
 Parameters: question - a natural language question
 Returns: question category, answer type, and a list of answers
-""" 
-@app.route('/answer', methods=['GET'])
+"""
+@app.route("/answer", methods=["GET"])
 def api_answer():
 
     args = request.args.to_dict()
-    if 'question' in args:
-        question = args['question']
+    if "question" in args:
+        question = args["question"]
+        print("Question: " + question)
     else:
-        error_output = {'error':True}
+        error_output = {"error": True}
         return jsonify(error_output)
-   
-    entities = get_entities_from_elas4rdf(question,description_label="description")
-    print("Entities found: "+str(len(entities)))
+
+    # use the entity provided
+    if "entity" in args:
+        entities = [{"uri": args["entity"], "text": ""}]
+        print("Provided Entity: " + args["entity"])
+        esearch_time = 0
+    # use entity search
+    else:
+        start = time.time()
+        entities = get_entities_from_elas4rdf(
+            question, description_label="rdfs_comment"
+        )
+        end = time.time()
+        esearch_time = end - start
+        print("Entity Search: " + str(end - start))
+    print("Entities found: " + str(len(entities)))
 
     """
     to improve performance when we receive a large number of entities
-    we use only the first 10
+    we use only the first
     """
-    if len(entities)>10:
-        entities = entities[0:10]
+    # if len(entities)>10:
+    entities = entities[:1]
 
-    # ATP
-    
-    start = time.time()
-    found_category, found_type = atp.classify_category(question)
-    end = time.time()
-    atp_time = end-start
-    print(found_category,found_type)
-    print("Answer type prediction: ",atp_time)
-
-    # if found_category == "resource":
-    #     found_types = atp.classify_resource(question)[0:10]
-    # else:
-    #     found_types = [found_type]
+    if len(entities) == 0:
+        return jsonify(
+            {"answers": [{"answer": "No entities found for this query", "error": True}]}
+        )
 
     found_category = None
     found_type = None
-    # atp_time = 0
 
-    start = time.time()
-    # depth  2 3 4 5
-    entities = ae.extend_entities(entities,found_category,found_type,depth=3)
-    end = time.time()
-    ea_time = end-start
-    print("Entity expansion: ",ea_time)
+    # ------------------- #
+    try:
+        depths = parse_depth(args)
+        threshold = parse_threshold(args)
+        ignorePreviousDepth = parse_ignore(args)
+        print(depths)
+        print(threshold)
+        print(ignorePreviousDepth)
+        if(threshold):
+            use_threshold = True
+        else:
+            use_threshold = False
+
+    except :
+        return jsonify({"error":"error in parameters"})
+        
+    # change the depth array in order to expand each depth for each entity
+    # depth 1 2 3 4
+    answers = []
+    ea_time = 0
+    aexctr_time = 0
+
+    for d in depths:
+
+        # Expand Entity Path
+        assert len(entities) == 1
+        start = time.time()
+        ext_entity = ae.extend_entities(
+            entities,
+            found_category,
+            found_type,
+            depth=d,
+            ignorePreviousDepth=ignorePreviousDepth,
+        )
+
+        end = time.time()
+        ea_time += end - start
+        print("Entity Path expansion: ", end - start)
+
+        # Answer Extraction
+        assert len(ext_entity) == 1
+        start = time.time()
+        answer = ae.answer_extractive(question, ext_entity)[0]
+        end = time.time()
+        aexctr_time += end - start
+        print("Answer extraction: ", end - start)
+
+        answers.append(answer)
+
+        if use_threshold and answer["score"] >= threshold:
+            # stop the loop , send the answer
+            print(
+                "Using Threshold: "
+                + str(threshold)
+                + ", Answer has score: "
+                + str(answer["score"])
+            )
+            answers = [answer]
+            break
+
     # return jsonify(entities)
-    
-    # ea_time = 0
 
+    # keep the first highest score
+    answers.sort(key=lambda x: x["score"], reverse=True)
+    answers = answers[:1]
 
-    start = time.time()
-    answers = ae.answer_extractive(question,entities)
-    end = time.time()
-    aexctr_time = end-start
-    print("Answer extraction: ",aexctr_time)
+    total_times = {
+        "EntitySearch": esearch_time,
+        "PathExpansion": ea_time,
+        "AnswerExtraction": aexctr_time,
+        "Total": esearch_time + ea_time + aexctr_time,
+    }
+    print("Total Times: ", total_times)
 
     response = {
-        # "category":found_category,
-        # "types":found_types[0],
-        "answers":answers
+        "answers": answers,
+        "time": total_times,
     }
 
-    log.append({
-        "ATP" : atp_time,
-        "Expansion" : ea_time,
-        "AExtraction" : aexctr_time
-    })
-    out =  open("./performance.log.json","w",encoding="utf8")
-    json.dump(log,out)
     return jsonify(response)
 
-@app.route('/', methods=['GET'])
+
+@app.route("/", methods=["GET"])
 def greet():
     return "Usage: /answer?question=..."
+
+
+def parse_depth(args):
+    if "depth" in args and args["depth"].isnumeric() :
+        return [int(args["depth"])]
+    else:
+        return [1, 2, 3, 4]
+
+def parse_threshold(args):
+    if "threshold" in args:
+        try:
+            threshold = float(args["threshold"]) 
+            return threshold
+        except:
+            return False
+    return False 
+
+def parse_ignore(args):
+    if "ignore_previous_depth" in args:
+        return True if args["ignore_previous_depth"].lower() in ["1","true"] else False
+    else: return False 
+
+
