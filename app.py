@@ -8,9 +8,10 @@ from answer_extraction import AnswerExtraction
 from entity_expansion import get_entities_from_elas4rdf
 
 app = flask.Flask(__name__)
-# Initialize answer extraction and answer type prediction components
+# Initialize answer extraction component
 print("Initializing...")
 ae = AnswerExtraction()
+print("CIDOC-QA is Up!")
 
 """
 Parameters: question - a natural language question
@@ -40,7 +41,6 @@ def api_answer():
         )
         end = time.time()
         esearch_time = end - start
-        print("Entity Search: " + str(end - start))
     print("Entities found: " + str(len(entities)))
 
     """
@@ -63,9 +63,6 @@ def api_answer():
         depths = parse_depth(args)
         threshold = parse_threshold(args)
         ignorePreviousDepth = parse_ignore(args)
-        print(depths)
-        print(threshold)
-        print(ignorePreviousDepth)
         if(threshold):
             use_threshold = True
         else:
@@ -95,7 +92,6 @@ def api_answer():
 
         end = time.time()
         ea_time += end - start
-        print("Entity Path expansion: ", end - start)
 
         # Answer Extraction
         assert len(ext_entity) == 1
@@ -103,7 +99,6 @@ def api_answer():
         answer = ae.answer_extractive(question, ext_entity)[0]
         end = time.time()
         aexctr_time += end - start
-        print("Answer extraction: ", end - start)
 
         answers.append(answer)
 

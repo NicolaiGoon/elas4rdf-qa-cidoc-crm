@@ -7,6 +7,7 @@ import re
 import copy
 import time
 from itertools import groupby
+from dotenv import load_dotenv
 
 """
 This module contains methods to retrieve entities
@@ -15,8 +16,10 @@ RDF nodes that match the answer type to a question
 and generate sentences to extend entity descriptions
 """
 
-SPARQL_URL = "http://192.168.1.5:7200/repositories/cidoc-crm"
-ELAS4RDF_SEARCH_URL = "http://127.0.0.1:8080/elas4rdf-rest"
+load_dotenv()
+
+SPARQL_URL = os.getenv('SPARQL_URL')
+ELAS4RDF_SEARCH_URL = os.getenv('ELAS4RDF_SEARCH_URL')
 
 def sparql_query(query_string, headers="application/json"):
     # Execute a query on a SPARQL endpoint
