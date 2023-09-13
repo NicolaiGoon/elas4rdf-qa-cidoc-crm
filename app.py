@@ -3,11 +3,12 @@ import time
 
 import flask
 from flask import jsonify, request
-
+from flask_cors import CORS
 from answer_extraction import AnswerExtraction
 from entity_expansion import get_entities_from_elas4rdf
 
 app = flask.Flask(__name__)
+CORS(app)
 # Initialize answer extraction component
 print("Initializing...")
 ae = AnswerExtraction()
@@ -42,6 +43,8 @@ def api_answer():
         end = time.time()
         esearch_time = end - start
     print("Entities found: " + str(len(entities)))
+
+    question_type = args["question_type"]
 
     """
     to improve performance when we receive a large number of entities
@@ -96,7 +99,7 @@ def api_answer():
         # Answer Extraction
         assert len(ext_entity) == 1
         start = time.time()
-        answer = ae.answer_extractive(question, ext_entity)[0]
+        answer = ae.answer_extractive(question, ext_entity, question_type)[0]
         end = time.time()
         aexctr_time += end - start
 

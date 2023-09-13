@@ -6,7 +6,7 @@ import json
 import re
 import copy
 import time
-from itertools import groupby
+from itertools import groupby,permutations
 from dotenv import load_dotenv
 
 """
@@ -18,21 +18,22 @@ and generate sentences to extend entity descriptions
 
 load_dotenv()
 
-SPARQL_URL = os.getenv('SPARQL_URL')
-ELAS4RDF_SEARCH_URL = os.getenv('ELAS4RDF_SEARCH_URL')
+SPARQL_IP = os.getenv('SPARQL_IP')
+ELAS4RDF_SEARCH_IP = os.getenv('ELAS4RDF_SEARCH_IP')
 
 def sparql_query(query_string, headers="application/json"):
     # Execute a query on a SPARQL endpoint
 
     payload = {
         "query": query_string,
-        # "default-graph-uri": "http://localhost:8890/cidoc-crm"
     }
     headers = {"Accept": headers}
-    response = requests.get(SPARQL_URL, params=payload, headers=headers)
+    url = "http://" + SPARQL_IP + "/repositories/cidoc-crm"
+    response = requests.get(url, params=payload, headers=headers)
     # print(response.text)
     try:
         results = response.json()
+        print("SPARQL query ok")
     except:
         print("sparql error")
         print(response)
@@ -166,7 +167,7 @@ def get_entities_from_elas4rdf(query, description_label, size=1000):
     Get entities from the elas4rdf search service
     The parameter 'size' defines the number of triples to use to create the entities
     """
-    url = ELAS4RDF_SEARCH_URL + "/high-level"
+    url = "http://" + ELAS4RDF_SEARCH_IP + "/elas4rdf-rest/high-level"
     # the id of the elastic search index
     index_id = "cidoc_crm"
 
@@ -192,7 +193,7 @@ def get_entities_from_elas4rdf(query, description_label, size=1000):
             }
             })
         response_init = requests.request("POST",
-            ELAS4RDF_SEARCH_URL+"/datasets",
+            ELAS4RDF_SEARCH_IP+"/datasets",
             headers={'Content-Type': 'application/json'},
             data=init_payload)
         assert response_init.status_code == 200
@@ -321,9 +322,11 @@ def expandEntitiesPath(
         # text = cidocGraphToText(subgraph)
 
         # works with GraphDB
-        text = cidocGraphToTextV2(
+        triples = graph_to_triples(
             subgraph, ignorePreviousDepth=ignorePreviousDepth, depth=depth
         )
+
+        text = triples_to_text(triples)
 
         ext = copy.deepcopy(e)
         ext["text"] += " " + text
@@ -431,12 +434,17 @@ def cidocGraphToText(g, labelName="prefLabel"):
     return re.sub(r"\s{2,}", " ", text).replace(" .", ".")
 
 
-def cidocGraphToTextV2(g, ignorePreviousDepth=False, depth=0):
+def triples_to_text(triples):
+    separator = ". "
+    triples = separator.join(triples)
+    return re.sub(r"\s{2,}", " ", triples).replace(" .", ".")
+
+
+def graph_to_triples(g, ignorePreviousDepth=False, depth=0):
     """
     Converts the result of a SPARQL query with GraphDB property path to readable triples
     """
-    # print(g)
-    text = []
+    triples = []
     try:
         for row in g["results"]["bindings"]:
             # print(row)
@@ -470,11 +478,18 @@ def cidocGraphToTextV2(g, ignorePreviousDepth=False, depth=0):
             # if one property of the triple is empty skip it
             if not subject or not obj or not predicate:
                 continue
-            text.append(subject + " " + predicate + " " + obj)
-        # text = list(set(text))
-        separator = ". "
-        text = separator.join(text)
-        return re.sub(r"\s{2,}", " ", text).replace(" .", ".")
+            triples.append(re.sub(r"\s{2,}", " ",subject + " " + predicate + " " + obj))
+        # remove dublicates
+        return [t for i,t in enumerate(triples) if triples.index(t) == i]
     except Exception as err:
         print(err)
-        return ""
+        return []
+
+def compute_linear_orderings(triples):
+    print(triples)
+    possible_orders = permutations(triples)
+    orders = []
+    for order in possible_orders:
+        orders.append("".join([str(o) + ". " for o in order]))
+
+    return orders

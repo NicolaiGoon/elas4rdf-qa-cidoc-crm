@@ -1,0 +1,3614 @@
+[2023-03-16 21:15:40 +0200] [60973] [INFO] Starting gunicorn 20.0.4
+[2023-03-16 21:15:40 +0200] [60973] [INFO] Listening at: http://0.0.0.0:5000 (60973)
+[2023-03-16 21:15:40 +0200] [60973] [INFO] Using worker: gevent
+[2023-03-16 21:15:40 +0200] [60976] [INFO] Booting worker with pid: 60976
+[2023-03-16 21:15:40 +0200] [60977] [INFO] Booting worker with pid: 60977
+[2023-03-16 21:15:40 +0200] [60978] [INFO] Booting worker with pid: 60978
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+[2023-03-16 22:00:10,990] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 144, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/gevent/_socketcommon.py", line 607, in connect
+    raise _SocketError(err, strerror(err))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1331, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1280, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1046, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 984, in send
+    self.connect()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 169, in connect
+    conn = self._new_conn()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 153, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f9099fb7e48>: Failed to establish a new connection: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 440, in send
+    timeout=timeout
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f9099fb7e48>: Failed to establish a new connection: [Errno 111] Connection refused',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 40, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 177, in get_entities_from_elas4rdf
+    response = requests.get(url, params=payload, headers=headers)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 630, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f9099fb7e48>: Failed to establish a new connection: [Errno 111] Connection refused',))
+[2023-03-16 22:00:12,940] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 144, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/gevent/_socketcommon.py", line 607, in connect
+    raise _SocketError(err, strerror(err))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1331, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1280, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1046, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 984, in send
+    self.connect()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 169, in connect
+    conn = self._new_conn()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 153, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f9099fea080>: Failed to establish a new connection: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 440, in send
+    timeout=timeout
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f9099fea080>: Failed to establish a new connection: [Errno 111] Connection refused',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 40, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 177, in get_entities_from_elas4rdf
+    response = requests.get(url, params=payload, headers=headers)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 630, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f9099fea080>: Failed to establish a new connection: [Errno 111] Connection refused',))
+[2023-03-16 22:00:13,743] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 144, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/gevent/_socketcommon.py", line 607, in connect
+    raise _SocketError(err, strerror(err))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1331, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1280, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1046, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 984, in send
+    self.connect()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 169, in connect
+    conn = self._new_conn()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 153, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f909a0f4908>: Failed to establish a new connection: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 440, in send
+    timeout=timeout
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f909a0f4908>: Failed to establish a new connection: [Errno 111] Connection refused',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 40, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 177, in get_entities_from_elas4rdf
+    response = requests.get(url, params=payload, headers=headers)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 630, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f909a0f4908>: Failed to establish a new connection: [Errno 111] Connection refused',))
+[2023-03-16 22:00:22,108] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 144, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/usr/lib/python3/dist-packages/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/gevent/_socketcommon.py", line 607, in connect
+    raise _SocketError(err, strerror(err))
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 357, in _make_request
+    conn.request(method, url, **httplib_request_kw)
+  File "/usr/lib/python3.6/http/client.py", line 1285, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1331, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1280, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.6/http/client.py", line 1046, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.6/http/client.py", line 984, in send
+    self.connect()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 169, in connect
+    conn = self._new_conn()
+  File "/usr/lib/python3/dist-packages/urllib3/connection.py", line 153, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+urllib3.exceptions.NewConnectionError: <urllib3.connection.HTTPConnection object at 0x7f9099feadd8>: Failed to establish a new connection: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 440, in send
+    timeout=timeout
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 398, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+urllib3.exceptions.MaxRetryError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f9099feadd8>: Failed to establish a new connection: [Errno 111] Connection refused',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 40, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 177, in get_entities_from_elas4rdf
+    response = requests.get(url, params=payload, headers=headers)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 630, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 508, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /elas4rdf-rest/high-level?id=cidoc_crm&query=null&size=1000 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f9099feadd8>: Failed to establish a new connection: [Errno 111] Connection refused',))
+[2023-03-17 14:09:42,573] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 99, in api_answer
+    answer = ae.answer_extractive(question, ext_entity)[0]
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 31, in answer_extractive
+    output = self.pipeline({"question":question, "context":e["text"]})
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 219, in __call__
+    examples = self._args_parser(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 93, in __call__
+    inputs[i] = self.normalize(item)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 48, in normalize
+    raise ValueError("`{}` cannot be empty".format(k))
+ValueError: `question` cannot be empty
+[2023-03-17 14:10:07,027] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 99, in api_answer
+    answer = ae.answer_extractive(question, ext_entity)[0]
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 31, in answer_extractive
+    output = self.pipeline({"question":question, "context":e["text"]})
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 219, in __call__
+    examples = self._args_parser(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 93, in __call__
+    inputs[i] = self.normalize(item)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 48, in normalize
+    raise ValueError("`{}` cannot be empty".format(k))
+ValueError: `question` cannot be empty
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: null
+Question: null
+Question: null
+Question: null
+Question: who si who
+Entities found: 90
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12508726119995117, 'PathExpansion': 0.2512063980102539, 'AnswerExtraction': 12.015687942504883, 'Total': 12.391981601715088}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11147451400756836, 'PathExpansion': 0.12916970252990723, 'AnswerExtraction': 1.7964839935302734, 'Total': 2.037128210067749}
+Question: who created the mornign haze?
+Entities found: 89
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09638810157775879, 'PathExpansion': 0.10602879524230957, 'AnswerExtraction': 1.0662217140197754, 'Total': 1.2686386108398438}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09786868095397949, 'PathExpansion': 0.10801124572753906, 'AnswerExtraction': 2.656524896621704, 'Total': 2.8624048233032227}
+Question: who created the mornign haze?
+Entities found: 89
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0864255428314209, 'PathExpansion': 0.11426925659179688, 'AnswerExtraction': 1.1864566802978516, 'Total': 1.3871514797210693}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08128023147583008, 'PathExpansion': 0.09715890884399414, 'AnswerExtraction': 1.128157377243042, 'Total': 1.3065965175628662}
+Question: aewaed
+Entities found: 0
+Question: when the Fall of Przemsyl ended?
+Entities found: 165
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1414170265197754, 'PathExpansion': 0.10901355743408203, 'AnswerExtraction': 1.3770043849945068, 'Total': 1.6274349689483643}
+Question: which is the width of morning haze studied?
+Entities found: 345
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1185612678527832, 'PathExpansion': 0.1069035530090332, 'AnswerExtraction': 2.7138376235961914, 'Total': 2.939302444458008}
+Question: how is identified morning haze?
+Entities found: 230
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10704755783081055, 'PathExpansion': 0.10300278663635254, 'AnswerExtraction': 2.5819194316864014, 'Total': 2.7919697761535645}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11572265625, 'PathExpansion': 0.09784245491027832, 'AnswerExtraction': 2.4288828372955322, 'Total': 2.6424479484558105}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0896005630493164, 'PathExpansion': 0.02515125274658203, 'AnswerExtraction': 0.30132246017456055, 'Total': 0.416074275970459}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0770876407623291, 'PathExpansion': 0.09612202644348145, 'AnswerExtraction': 1.105440616607666, 'Total': 1.2786502838134766}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07892894744873047, 'PathExpansion': 0.09067177772521973, 'AnswerExtraction': 0.9960150718688965, 'Total': 1.1656157970428467}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07407212257385254, 'PathExpansion': 0.10308623313903809, 'AnswerExtraction': 0.9619884490966797, 'Total': 1.1391468048095703}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07625865936279297, 'PathExpansion': 0.05488014221191406, 'AnswerExtraction': 0.2656259536743164, 'Total': 0.39676475524902344}
+Question: 
+Entities found: 1000
+SPARQL query ok
+starting answer extraction
+Question: who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08648848533630371, 'PathExpansion': 0.1047823429107666, 'AnswerExtraction': 1.4176816940307617, 'Total': 1.608952522277832}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07832694053649902, 'PathExpansion': 0.10669708251953125, 'AnswerExtraction': 2.6273531913757324, 'Total': 2.8123772144317627}
+Question: who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06910228729248047, 'PathExpansion': 0.020246505737304688, 'AnswerExtraction': 0.2665541172027588, 'Total': 0.35590291023254395}
+Question: who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0752561092376709, 'PathExpansion': 0.014938592910766602, 'AnswerExtraction': 0.2421588897705078, 'Total': 0.3323535919189453}
+Question: who is the man that carried out morning haze
+Entities found: 99
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09677410125732422, 'PathExpansion': 0.02677774429321289, 'AnswerExtraction': 0.28467893600463867, 'Total': 0.4082307815551758}
+Question: ποιος δημιούργησε το morning haze
+Entities found: 153
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08296680450439453, 'PathExpansion': 0.02158331871032715, 'AnswerExtraction': 0.30518484115600586, 'Total': 0.40973496437072754}
+Question: when the Fall of Przemsyl ended?
+Entities found: 165
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08206796646118164, 'PathExpansion': 0.07468891143798828, 'AnswerExtraction': 2.3484926223754883, 'Total': 2.505249500274658}
+Question: oof
+Entities found: 0
+Question: when the Fall of Przemsyl ended?
+Entities found: 165
+SPARQL query ok
+starting answer extraction[2023-03-17 14:43:59,891] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 99, in api_answer
+    answer = ae.answer_extractive(question, ext_entity)[0]
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 31, in answer_extractive
+    output = self.pipeline({"question":question, "context":e["text"]})
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 219, in __call__
+    examples = self._args_parser(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 93, in __call__
+    inputs[i] = self.normalize(item)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 48, in normalize
+    raise ValueError("`{}` cannot be empty".format(k))
+ValueError: `question` cannot be empty
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1265430450439453, 'PathExpansion': 0.1311655044555664, 'AnswerExtraction': 2.789046287536621, 'Total': 3.046754837036133}
+Question: who si who
+Entities found: 90
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11530494689941406, 'PathExpansion': 0.20306062698364258, 'AnswerExtraction': 12.065582036972046, 'Total': 12.383947610855103}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11323070526123047, 'PathExpansion': 0.11938309669494629, 'AnswerExtraction': 1.3377599716186523, 'Total': 1.570373773574829}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08590340614318848, 'PathExpansion': 0.1151282787322998, 'AnswerExtraction': 2.6785576343536377, 'Total': 2.879589319229126}
+Question: who created the mornign haze?
+Entities found: 89
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08412909507751465, 'PathExpansion': 0.10614371299743652, 'AnswerExtraction': 1.1613409519195557, 'Total': 1.3516137599945068}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08864116668701172, 'PathExpansion': 0.11553478240966797, 'AnswerExtraction': 1.6841909885406494, 'Total': 1.888366937637329}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09484386444091797, 'PathExpansion': 0.11252951622009277, 'AnswerExtraction': 1.0495483875274658, 'Total': 1.2569217681884766}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13189148902893066, 'PathExpansion': 4.537897109985352, 'AnswerExtraction': 3.0611772537231445, 'Total': 7.730965852737427}
+Question: where  the creator of morning haze studied?
+Entities found: 172
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10490202903747559, 'PathExpansion': 0.11424064636230469, 'AnswerExtraction': 2.5668606758117676, 'Total': 2.786003351211548}
+Question: which is the dimension of morning haze?
+Entities found: 189
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10640335083007812, 'PathExpansion': 0.10150623321533203, 'AnswerExtraction': 2.419891834259033, 'Total': 2.6278014183044434}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08148479461669922, 'PathExpansion': 0.10315823554992676, 'AnswerExtraction': 2.5034122467041016, 'Total': 2.6880552768707275}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08577990531921387, 'PathExpansion': 0.08471918106079102, 'AnswerExtraction': 1.231553077697754, 'Total': 1.4020521640777588}
+Question: 
+Entities found: 1000
+SPARQL query ok
+starting answer extraction
+Question: gfgf
+Entities found: 0
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07519102096557617, 'PathExpansion': 0.1045687198638916, 'AnswerExtraction': 2.6868295669555664, 'Total': 2.866589307785034}
+Question: Who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07126212120056152, 'PathExpansion': 0.09577250480651855, 'AnswerExtraction': 1.0851249694824219, 'Total': 1.252159595489502}
+Question: who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07841706275939941, 'PathExpansion': 0.028991222381591797, 'AnswerExtraction': 0.32947564125061035, 'Total': 0.43688392639160156}
+Question: who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07569408416748047, 'PathExpansion': 0.022909164428710938, 'AnswerExtraction': 0.3482205867767334, 'Total': 0.4468238353729248}
+Question: who is the man that produced  morning haze
+Entities found: 148
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08625149726867676, 'PathExpansion': 0.022481441497802734, 'AnswerExtraction': 0.27784276008605957, 'Total': 0.38657569885253906}
+Question: who is the man that δημιούργησε morning haze
+Entities found: 101
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10991859436035156, 'PathExpansion': 0.021435260772705078, 'AnswerExtraction': 0.35489368438720703, 'Total': 0.48624753952026367}
+Question: when the Fall of Przemsyl ended?
+Entities found: 165
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09731554985046387, 'PathExpansion': 0.07937955856323242, 'AnswerExtraction': 1.1414647102355957, 'Total': 1.318159818649292}
+Question: 
+Entities found: 1000
+SPARQL query ok
+starting answer extraction
+Question: Where the creator of Still Life with Menu studied?
+Entities found: 312
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08444428443908691, 'PathExpansion': 0.03542494773864746, 'AnswerExtraction': 0.5701138973236084, 'Total': 0.6899831295013428}
+Question: Where the creator of Still Life with Menu studied?
+Entities found: 312
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07993030548095703, 'PathExpansion': 0.03569293022155762, 'AnswerExtraction': 0.8856163024902344, 'Total': 1.001239538192749}
+Question: Where the creator of Still Life with Menu studied?
+Entities found: 312
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07844257354736328, 'PathExpansion': 0.03426647186279297, 'AnswerExtraction': 0.9445815086364746, 'Total': 1.0572905540466309}
+Question: Who is the creator of  Carillon Tower, Chicago Fair?
+Entities found: 213
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extractionInitializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.160186767578125, 'PathExpansion': 0.1566455364227295, 'AnswerExtraction': 3.5246670246124268, 'Total': 3.8414993286132812}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1517009735107422, 'PathExpansion': 4.8113625049591064, 'AnswerExtraction': 3.3175089359283447, 'Total': 8.280572414398193}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.26993274688720703, 'PathExpansion': 0.19120407104492188, 'AnswerExtraction': 1.2797982692718506, 'Total': 1.7409350872039795}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10997724533081055, 'PathExpansion': 0.1291065216064453, 'AnswerExtraction': 2.828841209411621, 'Total': 3.067924976348877}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09026145935058594, 'PathExpansion': 0.11374855041503906, 'AnswerExtraction': 4.867682218551636, 'Total': 5.071692228317261}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09801054000854492, 'PathExpansion': 0.10383009910583496, 'AnswerExtraction': 2.5775747299194336, 'Total': 2.7794153690338135}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13325715065002441, 'PathExpansion': 0.19183039665222168, 'AnswerExtraction': 2.3771779537200928, 'Total': 2.702265501022339}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11392569541931152, 'PathExpansion': 0.14599823951721191, 'AnswerExtraction': 2.199136734008789, 'Total': 2.4590606689453125}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.14152812957763672, 'PathExpansion': 0.13889694213867188, 'AnswerExtraction': 2.1705195903778076, 'Total': 2.450944662094116}
+Question: which is the width of morning haze?
+Entities found: 345
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1144247055053711, 'PathExpansion': 0.1174473762512207, 'AnswerExtraction': 2.4749982357025146, 'Total': 2.7068703174591064}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09448552131652832, 'PathExpansion': 0.03469991683959961, 'AnswerExtraction': 1.275698184967041, 'Total': 1.404883623123169}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09273958206176758, 'PathExpansion': 0.09733295440673828, 'AnswerExtraction': 1.6678791046142578, 'Total': 1.8579516410827637}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07508111000061035, 'PathExpansion': 0.10236668586730957, 'AnswerExtraction': 2.5212156772613525, 'Total': 2.6986634731292725}
+Question: dfsd
+Entities found: 0
+Question: who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08474063873291016, 'PathExpansion': 0.10947728157043457, 'AnswerExtraction': 1.1473584175109863, 'Total': 1.341576337814331}
+Question: who is the creator of morning haze
+Entities found: 166
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07318282127380371, 'PathExpansion': 0.025570154190063477, 'AnswerExtraction': 0.3089601993560791, 'Total': 0.4077131748199463}
+Question: who created morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06951045989990234, 'PathExpansion': 0.09470415115356445, 'AnswerExtraction': 1.2870497703552246, 'Total': 1.4512643814086914}
+Question: Where the creator of Still Life with Menu studied?
+Entities found: 312
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08556103706359863, 'PathExpansion': 0.10757565498352051, 'AnswerExtraction': 1.6636357307434082, 'Total': 1.8567724227905273}
+Question: Who is the creator of  Carillon Tower, Chicago Fair?
+Entities found: 213
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0731039047241211, 'PathExpansion': 0.06421113014221191, 'AnswerExtraction': 0.32036685943603516, 'Total': 0.45768189430236816}
+Question: Where was John Marin in the summer
+Entities found: 965
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1681835651397705, 'PathExpansion': 0.08402132987976074, 'AnswerExtraction': 13.004623413085938, 'Total': 13.256828308105469}
+Question: Who influenced the creator of Maine Centennial Half Dollar
+Entities found: 235
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07670760154724121, 'PathExpansion': 0.10035252571105957, 'AnswerExtraction': 2.742597818374634, 'Total': 2.9196579456329346}
+Question: Who influenced the creator of Maine Centennial Half Dollar
+Entities found: 235
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07965898513793945, 'PathExpansion': 0.10728859901428223, 'AnswerExtraction': 6.621099233627319, 'Total': 6.808046817779541}
+Question: From which artist Walter Pach influenced by
+Entities found: 348
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0950462818145752, 'PathExpansion': 0.02943253517150879, 'AnswerExtraction': 1.3389551639556885, 'Total': 1.4634339809417725}[2023-03-17 15:21:47,233] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.6/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.6/dist-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 99, in api_answer
+    answer = ae.answer_extractive(question, ext_entity)[0]
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 31, in answer_extractive
+    output = self.pipeline({"question":question, "context":e["text"]})
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 219, in __call__
+    examples = self._args_parser(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 93, in __call__
+    inputs[i] = self.normalize(item)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 48, in normalize
+    raise ValueError("`{}` cannot be empty".format(k))
+ValueError: `question` cannot be empty
+[2023-03-17 15:23:09 +0200] [60973] [INFO] Handling signal: term
+[2023-03-17 15:23:09 +0200] [60977] [INFO] Worker exiting (pid: 60977)
+
+[2023-03-17 15:23:10 +0200] [60976] [INFO] Worker exiting (pid: 60976)
+
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08675146102905273, 'PathExpansion': 0.06893515586853027, 'AnswerExtraction': 2.0201687812805176, 'Total': 2.1758553981781006}
+Question: when the Fall of Przemsyl ended?
+Entities found: 165
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08686232566833496, 'PathExpansion': 0.07285594940185547, 'AnswerExtraction': 2.089540958404541, 'Total': 2.2492592334747314}
+Question: Where the creator of Still Life with Menu studied?
+Entities found: 312
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08265852928161621, 'PathExpansion': 0.07839202880859375, 'AnswerExtraction': 1.6829113960266113, 'Total': 1.8439619541168213}
+Question: Where the creator of Still Life with Menu studied?
+Entities found: 312
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13982272148132324, 'PathExpansion': 0.03622627258300781, 'AnswerExtraction': 0.8504137992858887, 'Total': 1.0264627933502197}
+Question: asd
+Entities found: 0
+Question: Who is the creator of  Carillon Tower, Chicago Fair?
+Entities found: 213
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0693209171295166, 'PathExpansion': 0.11578106880187988, 'AnswerExtraction': 2.4744551181793213, 'Total': 2.6595571041107178}
+Question: Where the creator of Gas Station studied
+Entities found: 146
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08457112312316895, 'PathExpansion': 0.10178112983703613, 'AnswerExtraction': 1.1518526077270508, 'Total': 1.3382048606872559}
+Question: Who is the creator of Maine Centennial Half Dollar
+Entities found: 234
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09900712966918945, 'PathExpansion': 0.09886050224304199, 'AnswerExtraction': 2.875495433807373, 'Total': 3.0733630657196045}
+Question: Who influenced Walter Pach
+Entities found: 312
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08327364921569824, 'PathExpansion': 0.09981799125671387, 'AnswerExtraction': 3.889673948287964, 'Total': 4.072765588760376}
+Question: Which artists influenced Walter Pach
+Entities found: 511
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11543893814086914, 'PathExpansion': 0.08015680313110352, 'AnswerExtraction': 2.0607829093933105, 'Total': 2.256378650665283}
+Question: Which artists Walter Pach influenced by
+Entities found: 511
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10889077186584473, 'PathExpansion': 0.0786280632019043, 'AnswerExtraction': 3.5661211013793945, 'Total': 3.7536399364471436}
+Question: Which artists Walter Pach influenced by
+Entities found: 511
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11356449127197266, 'PathExpansion': 0.02662968635559082, 'AnswerExtraction': 1.2677135467529297, 'Total': 1.4079077243804932}
+Question: asd
+Entities found: 0
+Question: Who is the creator of  Carillon Tower, Chicago Fair?
+Entities found: 213
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08386611938476562, 'PathExpansion': 0.18289542198181152, 'AnswerExtraction': 4.57150673866272, 'Total': 4.838268280029297}
+Question: 
+Entities found: 1000
+SPARQL query ok
+starting answer extraction
+Question: wdw
+Entities found: 0
+[2023-03-17 15:23:10 +0200] [60978] [INFO] Worker exiting (pid: 60978)
+
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08064436912536621, 'PathExpansion': 0.11260390281677246, 'AnswerExtraction': 1.2139372825622559, 'Total': 1.4071855545043945}
+Question: Who is the creator of  Carillon Tower, Chicago Fair?
+Entities found: 213
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07674384117126465, 'PathExpansion': 0.03487277030944824, 'AnswerExtraction': 1.0218720436096191, 'Total': 1.133488655090332}
+Question: Where was John Marin in the summer
+Entities found: 965
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.14826726913452148, 'PathExpansion': 0.08133292198181152, 'AnswerExtraction': 4.737774133682251, 'Total': 4.967374324798584}
+Question: Where the creator of Glass Tube studied
+Entities found: 815
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1399707794189453, 'PathExpansion': 0.08689546585083008, 'AnswerExtraction': 1.8871688842773438, 'Total': 2.114035129547119}
+Question: Which artists influenced Walter Pach
+Entities found: 511
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11491918563842773, 'PathExpansion': 0.08312845230102539, 'AnswerExtraction': 3.567659616470337, 'Total': 3.76570725440979}
+Question: Which artists Walter Pach influenced by
+Entities found: 511
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11779260635375977, 'PathExpansion': 0.09259438514709473, 'AnswerExtraction': 1.9762027263641357, 'Total': 2.1865897178649902}
+Question: From whihc artists Walter Pach influenced by
+Entities found: 344
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08814167976379395, 'PathExpansion': 0.03177690505981445, 'AnswerExtraction': 1.287240743637085, 'Total': 1.4071593284606934}
+[2023-03-17 15:23:10 +0200] [60973] [INFO] Shutting down: Master
+[2023-03-17 15:23:12 +0200] [18119] [INFO] Starting gunicorn 20.0.4
+[2023-03-17 15:23:12 +0200] [18119] [INFO] Listening at: http://0.0.0.0:5000 (18119)
+[2023-03-17 15:23:12 +0200] [18119] [INFO] Using worker: gevent
+[2023-03-17 15:23:12 +0200] [18122] [INFO] Booting worker with pid: 18122
+[2023-03-17 15:23:12 +0200] [18123] [INFO] Booting worker with pid: 18123
+[2023-03-17 15:23:12 +0200] [18124] [INFO] Booting worker with pid: 18124
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: From which artist the creator of Chapel of the Comforter influenced by
+Entities found: 138
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09942936897277832, 'PathExpansion': 0.04090428352355957, 'AnswerExtraction': 1.0748240947723389, 'Total': 1.2151577472686768}
+Question: Tell me some artists that the creator of Chapel of the Comforter influenced by
+Entities found: 431
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11029601097106934, 'PathExpansion': 0.039662837982177734, 'AnswerExtraction': 1.0114376544952393, 'Total': 1.1613965034484863}
+Question: Tell me a few artists that the creator of Chapel of the Comforter influenced by
+Entities found: 463
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10567164421081543, 'PathExpansion': 0.04062914848327637, 'AnswerExtraction': 0.9376327991485596, 'Total': 1.0839335918426514}
+Question: Tell me 4 artists that the creator of Chapel of the Comforter influenced by
+Entities found: 388
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10358023643493652, 'PathExpansion': 0.03792524337768555, 'AnswerExtraction': 0.9488561153411865, 'Total': 1.0903615951538086}
+Question: Tell me some artists that the creator of Chapel of the Comforter influenced by
+Entities found: 431
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10216212272644043, 'PathExpansion': 0.03785872459411621, 'AnswerExtraction': 1.1077330112457275, 'Total': 1.2477538585662842}
+Question: asd
+Entities found: 0
+Question: asd
+Entities found: 0
+Question: who craeted tje painting who?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07663488388061523, 'PathExpansion': 0.10921764373779297, 'AnswerExtraction': 10.351256847381592, 'Total': 10.537109375}
+Question: Tell me some artists that the creator of Chapel of the Comforter influenced by
+Entities found: 431
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10706591606140137, 'PathExpansion': 0.09051966667175293, 'AnswerExtraction': 1.8931233882904053, 'Total': 2.0907089710235596}
+Question: Which are the lat and long of Fall of Przemsyl
+Entities found: 256
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0740971565246582, 'PathExpansion': 0.0695638656616211, 'AnswerExtraction': 1.6250636577606201, 'Total': 1.7687246799468994}
+Question: Which are the lat and long of Fall of Przemsyl
+Entities found: 256
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08165645599365234, 'PathExpansion': 0.020184040069580078, 'AnswerExtraction': 0.2477123737335205, 'Total': 0.34955286979675293}
+Question: Which were the participants of Fall of Przemsyl
+Entities found: 168
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08402824401855469, 'PathExpansion': 0.02824878692626953, 'AnswerExtraction': 0.37021327018737793, 'Total': 0.48249030113220215}
+Question: Where the Battle of Messines started
+Entities found: 276
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.24202895164489746, 'PathExpansion': 0.08509707450866699, 'AnswerExtraction': 1.53944730758667, 'Total': 1.8665733337402344}
+Question: When the Battle of Messines started
+Entities found: 293
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.20357680320739746, 'PathExpansion': 0.08946537971496582, 'AnswerExtraction': 1.6635394096374512, 'Total': 1.9565815925598145}
+Question: who is who
+Entities found: 93
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0762782096862793, 'PathExpansion': 0.11541533470153809, 'AnswerExtraction': 10.52363133430481, 'Total': 10.715324878692627}
+Question: who craeted the morning haze?
+Entities found: 163
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06326842308044434, 'PathExpansion': 0.09777593612670898, 'AnswerExtraction': 0.9225332736968994, 'Total': 1.0835776329040527}
+Question: who created the morngin haze
+Entities found: 89
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0854637622833252, 'PathExpansion': 0.09392428398132324, 'AnswerExtraction': 1.1392021179199219, 'Total': 1.3185901641845703}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06287407875061035, 'PathExpansion': 0.025286436080932617, 'AnswerExtraction': 0.28256821632385254, 'Total': 0.3707287311553955}
+Question: who created the mornging haze?
+Entities found: 89
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06525349617004395, 'PathExpansion': 0.1038520336151123, 'AnswerExtraction': 1.0528945922851562, 'Total': 1.2220001220703125}
+Question: who is who
+Entities found: 93
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.05811619758605957, 'PathExpansion': 0.1183021068572998, 'AnswerExtraction': 10.28804063796997, 'Total': 10.46445894241333}
+Question: who is who
+Entities found: 93
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.05854916572570801, 'PathExpansion': 0.020172834396362305, 'AnswerExtraction': 0.9319629669189453, 'Total': 1.0106849670410156}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07831645011901855, 'PathExpansion': 0.018183469772338867, 'AnswerExtraction': 0.24772000312805176, 'Total': 0.3442199230194092}
+Question: What events involve the German army?
+Entities found: 573
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09521913528442383, 'PathExpansion': 0.051610469818115234, 'AnswerExtraction': 3.2778754234313965, 'Total': 3.4247050285339355}
+Question: Who was responsible for Hardship experienced by Belgian civilians in 04/08/1914-11/11/1918?
+Entities found: 160
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08005499839782715, 'PathExpansion': 0.011318445205688477, 'AnswerExtraction': 0.9375255107879639, 'Total': 1.0288989543914795}
+Question: Who was responsible for Hardship experienced by Belgian civilians?
+Entities found: 143
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06410503387451172, 'PathExpansion': 1.2033321857452393, 'AnswerExtraction': 7.770712375640869, 'Total': 9.03814959526062}
+Question: Who was responsible for Hardship experienced by Belgian civilians?
+Entities found: 143
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07659482955932617, 'PathExpansion': 0.8482620716094971, 'AnswerExtraction': 11.453152894973755, 'Total': 12.378009796142578}[2023-03-17 20:07:56,984] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 100, in api_answer
+    answer = ae.answer_extractive(question, ext_entity)[0]
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 31, in answer_extractive
+    output = self.pipeline({"question":question, "context":e["text"]})
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 219, in __call__
+    examples = self._args_parser(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 93, in __call__
+    inputs[i] = self.normalize(item)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 48, in normalize
+    raise ValueError("`{}` cannot be empty".format(k))
+ValueError: `question` cannot be empty
+[2023-03-17 20:08:54,136] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 100, in api_answer
+    answer = ae.answer_extractive(question, ext_entity)[0]
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 31, in answer_extractive
+    output = self.pipeline({"question":question, "context":e["text"]})
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 219, in __call__
+    examples = self._args_parser(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 93, in __call__
+    inputs[i] = self.normalize(item)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 48, in normalize
+    raise ValueError("`{}` cannot be empty".format(k))
+ValueError: `question` cannot be empty
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: Tell me artists that the creator of Chapel of the Comforter influenced by
+Entities found: 491
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13524413108825684, 'PathExpansion': 0.036820411682128906, 'AnswerExtraction': 1.0935161113739014, 'Total': 1.265580654144287}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07641816139221191, 'PathExpansion': 0.09460186958312988, 'AnswerExtraction': 1.0981152057647705, 'Total': 1.2691352367401123}
+Question: Where the Fall of Przemsyl took place
+Entities found: 905
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07972502708435059, 'PathExpansion': 0.07671403884887695, 'AnswerExtraction': 2.358419895172119, 'Total': 2.5148589611053467}
+Question: Which are the lat and long of Fall of Przemsyl
+Entities found: 256
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09609198570251465, 'PathExpansion': 0.01355123519897461, 'AnswerExtraction': 0.41529130935668945, 'Total': 0.5249345302581787}
+Question: Which are the lat and long of Fall of Przemsyl
+Entities found: 256
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08228564262390137, 'PathExpansion': 0.024527788162231445, 'AnswerExtraction': 0.30913591384887695, 'Total': 0.41594934463500977}
+Question: Which were the participants of Battle of Messines
+Entities found: 286
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.34589505195617676, 'PathExpansion': 0.10214471817016602, 'AnswerExtraction': 1.6307940483093262, 'Total': 2.078833818435669}
+Question: who is who?
+Entities found: 93
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08295559883117676, 'PathExpansion': 0.12817955017089844, 'AnswerExtraction': 10.459721326828003, 'Total': 10.670856475830078}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.083160400390625, 'PathExpansion': 0.12404346466064453, 'AnswerExtraction': 1.393319845199585, 'Total': 1.6005237102508545}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07151246070861816, 'PathExpansion': 0.09675455093383789, 'AnswerExtraction': 1.395836591720581, 'Total': 1.564103603363037}
+Question: who gave the morning haze to the muesum?
+Entities found: 164
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06555438041687012, 'PathExpansion': 0.09771180152893066, 'AnswerExtraction': 1.064194917678833, 'Total': 1.2274610996246338}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06999611854553223, 'PathExpansion': 0.017808198928833008, 'AnswerExtraction': 0.24963045120239258, 'Total': 0.3374347686767578}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08574509620666504, 'PathExpansion': 0.10931801795959473, 'AnswerExtraction': 1.1447105407714844, 'Total': 1.3397736549377441}
+Question: morning haze
+Entities found: 153
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07000303268432617, 'PathExpansion': 0.09988212585449219, 'AnswerExtraction': 0.9975073337554932, 'Total': 1.1673924922943115}
+Question: who is who
+Entities found: 93
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0807194709777832, 'PathExpansion': 0.12252616882324219, 'AnswerExtraction': 10.318741083145142, 'Total': 10.521986722946167}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06537556648254395, 'PathExpansion': 0.10522079467773438, 'AnswerExtraction': 0.9922194480895996, 'Total': 1.162815809249878}
+Question: What events involve the German army?
+Entities found: 573
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07973098754882812, 'PathExpansion': 0.04941272735595703, 'AnswerExtraction': 3.080569267272949, 'Total': 3.2097129821777344}
+Question: Who was responsible for Hardship experienced by Belgian civilians in 04/08/1914-11/11/1918?
+Entities found: 160
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07170701026916504, 'PathExpansion': 0.014673709869384766, 'AnswerExtraction': 4.458427429199219e-05, 'Total': 0.0864253044128418}
+Question: Who was responsible for Hardship experienced by Belgian civilians in 04/08/1914-11/11/1918?
+Entities found: 160
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06915950775146484, 'PathExpansion': 0.04703712463378906, 'AnswerExtraction': 0.8317916393280029, 'Total': 0.9479882717132568}
+Question: Who was responsible for Hardship experienced by Belgian civilians?
+Entities found: 143
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06400442123413086, 'PathExpansion': 0.7227020263671875, 'AnswerExtraction': 8.438236713409424, 'Total': 9.224943161010742}
+Question: 
+Entities found: 1000
+SPARQL query ok
+starting answer extraction
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06474041938781738, 'PathExpansion': 0.08016252517700195, 'AnswerExtraction': 0.9718418121337891, 'Total': 1.1167447566986084}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.05779290199279785, 'PathExpansion': 0.07129359245300293, 'AnswerExtraction': 0.9987039566040039, 'Total': 1.1277904510498047}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07358193397521973, 'PathExpansion': 0.07189655303955078, 'AnswerExtraction': 1.11082124710083, 'Total': 1.2562997341156006}
+Question: Who created the morning haze?[2023-03-17 20:34:20,600] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-03-17 20:34:23,372] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-03-17 20:34:28,085] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-03-17 20:34:42,480] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-03-17 20:34:53,629] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08279728889465332, 'PathExpansion': 0.5718071460723877, 'AnswerExtraction': 6.517480373382568, 'Total': 7.172084808349609}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08237767219543457, 'PathExpansion': 0.6739442348480225, 'AnswerExtraction': 6.330605983734131, 'Total': 7.086927890777588}
+Question: 
+Entities found: 1000
+SPARQL query ok
+starting answer extraction
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06713151931762695, 'PathExpansion': 0.6333465576171875, 'AnswerExtraction': 6.347588062286377, 'Total': 7.048066139221191}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06233358383178711, 'PathExpansion': 0.5755724906921387, 'AnswerExtraction': 6.242386341094971, 'Total': 6.8802924156188965}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06564450263977051, 'PathExpansion': 0.637852668762207, 'AnswerExtraction': 6.338191986083984, 'Total': 7.041689157485962}
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0743262767791748, 'PathExpansion': 0.09480881690979004, 'AnswerExtraction': 10.589685916900635, 'Total': 10.7588210105896}
+Question: Which is the nationality of the creator of Concetta Scaravaglione?
+Entities found: 276
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0714879035949707, 'PathExpansion': 0.041922569274902344, 'AnswerExtraction': 0.6401536464691162, 'Total': 0.7535641193389893}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07578682899475098, 'PathExpansion': 0.0565035343170166, 'AnswerExtraction': 0.4931297302246094, 'Total': 0.625420093536377}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09249496459960938, 'PathExpansion': 0.09128260612487793, 'AnswerExtraction': 3.3666324615478516, 'Total': 3.550410032272339}
+Question: Who created the morning haze?
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Question: 
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.16669106483459473, 'PathExpansion': 0.0236051082611084, 'AnswerExtraction': 0.48900556564331055, 'Total': 0.6793017387390137}
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12398934364318848, 'PathExpansion': 0.039800405502319336, 'AnswerExtraction': 0.38788485527038574, 'Total': 0.5516746044158936}
+Question: what Leonard Ochtman has created?
+Entities found: 201
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13504815101623535, 'PathExpansion': 0.025676250457763672, 'AnswerExtraction': 0.9051089286804199, 'Total': 1.065833330154419}
+Question: what painting Leonard Ochtman created?
+Entities found: 525
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.17404770851135254, 'PathExpansion': 0.03255033493041992, 'AnswerExtraction': 0.6851906776428223, 'Total': 0.8917887210845947}
+Question: what painting Leonard Ochtman προδθψε?
+Entities found: 525
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13465404510498047, 'PathExpansion': 0.10855722427368164, 'AnswerExtraction': 1.9257686138153076, 'Total': 2.1689798831939697}
+Question: what painting Leonard Ochtman produced?
+Entities found: 525
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10785079002380371, 'PathExpansion': 0.0902106761932373, 'AnswerExtraction': 1.9960029125213623, 'Total': 2.1940643787384033}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10499191284179688, 'PathExpansion': 0.11685323715209961, 'AnswerExtraction': 3.0533080101013184, 'Total': 3.275153160095215}
+Question: What is the type of the morning haze?
+Entities found: 210
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12195849418640137, 'PathExpansion': 0.10916376113891602, 'AnswerExtraction': 2.432384490966797, 'Total': 2.6635067462921143}
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.18436098098754883, 'PathExpansion': 0.16440892219543457, 'AnswerExtraction': 10.934492349624634, 'Total': 11.283262252807617}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09295797348022461, 'PathExpansion': 0.8809795379638672, 'AnswerExtraction': 6.446606397628784, 'Total': 7.420543909072876}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08259034156799316, 'PathExpansion': 0.0298001766204834, 'AnswerExtraction': 0.28682899475097656, 'Total': 0.3992195129394531}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07845544815063477, 'PathExpansion': 0.015109777450561523, 'AnswerExtraction': 0.25263071060180664, 'Total': 0.34619593620300293}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction[2023-03-20 13:56:42,725] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 100, in api_answer
+    answer = ae.answer_extractive(question, ext_entity)[0]
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 31, in answer_extractive
+    output = self.pipeline({"question":question, "context":e["text"]})
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 219, in __call__
+    examples = self._args_parser(*args, **kwargs)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 93, in __call__
+    inputs[i] = self.normalize(item)
+  File "/usr/local/lib/python3.6/dist-packages/transformers/pipelines/question_answering.py", line 48, in normalize
+    raise ValueError("`{}` cannot be empty".format(k))
+ValueError: `question` cannot be empty
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: From which artist the creator of Chapel of the Comforter influenced by
+Entities found: 138
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09889602661132812, 'PathExpansion': 0.07180333137512207, 'AnswerExtraction': 2.21769642829895, 'Total': 2.3883957862854004}
+Question: Tell me an artist that the creator of Chapel of the Comforter influenced by
+Entities found: 491
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10539698600769043, 'PathExpansion': 0.039524078369140625, 'AnswerExtraction': 1.0490097999572754, 'Total': 1.1939308643341064}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06318044662475586, 'PathExpansion': 0.015007734298706055, 'AnswerExtraction': 0.26782989501953125, 'Total': 0.34601807594299316}
+Question: Where the Battle of Messines took place
+Entities found: 609
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.32988739013671875, 'PathExpansion': 0.11341047286987305, 'AnswerExtraction': 1.6854350566864014, 'Total': 2.128732919692993}
+Question: Tell me some artists that the creator of Chapel of the Comforter influenced by
+Entities found: 431
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.15941262245178223, 'PathExpansion': 0.1331498622894287, 'AnswerExtraction': 2.0858795642852783, 'Total': 2.3784420490264893}
+Question: who created the morning haze
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07941174507141113, 'PathExpansion': 0.09597945213317871, 'AnswerExtraction': 1.0123112201690674, 'Total': 1.1877024173736572}
+Question: who is who
+Entities found: 93
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09044170379638672, 'PathExpansion': 0.11398720741271973, 'AnswerExtraction': 10.694619417190552, 'Total': 10.899048328399658}
+Question: who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06749606132507324, 'PathExpansion': 0.08938121795654297, 'AnswerExtraction': 1.034400224685669, 'Total': 1.1912775039672852}
+Question: who created morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06999707221984863, 'PathExpansion': 0.10398602485656738, 'AnswerExtraction': 0.9361221790313721, 'Total': 1.110105276107788}
+Question: who created the mornign hze
+Entities found: 91
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07739973068237305, 'PathExpansion': 0.11482405662536621, 'AnswerExtraction': 10.449000835418701, 'Total': 10.64122462272644}
+Question: Who was responsible for Hardship experienced by Belgian civilians in 04/08/1914-11/11/1918?
+Entities found: 160
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09171104431152344, 'PathExpansion': 0.045389413833618164, 'AnswerExtraction': 3.2760043144226074, 'Total': 3.413104772567749}
+Question: Who was responsible for Hardship experienced by Belgian civilians in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07545876502990723, 'PathExpansion': 0.594609260559082, 'AnswerExtraction': 6.690196514129639, 'Total': 7.360264539718628}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07187914848327637, 'PathExpansion': 0.07735395431518555, 'AnswerExtraction': 1.7363314628601074, 'Total': 1.8855645656585693}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06402087211608887, 'PathExpansion': 0.08296322822570801, 'AnswerExtraction': 1.021106481552124, 'Total': 1.168090581893921}
+Question: Who created the morning haze?
+Question: Who created the morning haze?
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.3108642101287842, 'PathExpansion': 0.24153971672058105, 'AnswerExtraction': 12.281937837600708, 'Total': 12.834341764450073}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09835505485534668, 'PathExpansion': 0.09862518310546875, 'AnswerExtraction': 2.6487040519714355, 'Total': 2.845684289932251}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10781216621398926, 'PathExpansion': 0.20309734344482422, 'AnswerExtraction': 1.331714391708374, 'Total': 1.6426239013671875}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07826399803161621, 'PathExpansion': 0.07123327255249023, 'AnswerExtraction': 0.3156623840332031, 'Total': 0.46515965461730957}
+Question: 
+Entities found: 1000
+SPARQL query ok
+starting answer extraction
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08842301368713379, 'PathExpansion': 0.10703396797180176, 'AnswerExtraction': 1.392319917678833, 'Total': 1.5877768993377686}
+Question: Tell me cities that the creator of Poor Cupid lived?
+Entities found: 278
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09639883041381836, 'PathExpansion': 0.0926351547241211, 'AnswerExtraction': 8.161805868148804, 'Total': 8.350839853286743}
+Question: Give me the participants of the Battle of Cuinchy
+Entities found: 287
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.2262418270111084, 'PathExpansion': 0.05748438835144043, 'AnswerExtraction': 2.982288360595703, 'Total': 3.266014575958252}
+Question: Give me the participants of the Battle of Cuinchy
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07580447196960449, 'PathExpansion': 0.07531046867370605, 'AnswerExtraction': 1.5215442180633545, 'Total': 1.672659158706665}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06742572784423828, 'PathExpansion': 0.09750747680664062, 'AnswerExtraction': 1.3535895347595215, 'Total': 1.5185227394104004}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.8899409770965576, 'PathExpansion': 4.638800859451294, 'AnswerExtraction': 2.370673656463623, 'Total': 7.899415493011475}
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1416487693786621, 'PathExpansion': 0.037790536880493164, 'AnswerExtraction': 0.3767538070678711, 'Total': 0.5561931133270264}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0982663631439209, 'PathExpansion': 0.034412384033203125, 'AnswerExtraction': 0.4292943477630615, 'Total': 0.5619730949401855}
+Question: what painting Leonard Ochtman created?
+Entities found: 525
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11881518363952637, 'PathExpansion': 0.10518550872802734, 'AnswerExtraction': 2.0211892127990723, 'Total': 2.245189905166626}
+Question: what painting Leonard Ochtman created?
+Entities found: 525
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11030244827270508, 'PathExpansion': 0.09862923622131348, 'AnswerExtraction': 2.0677759647369385, 'Total': 2.276707649230957}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08832836151123047, 'PathExpansion': 0.8239836692810059, 'AnswerExtraction': 7.155583381652832, 'Total': 8.067895412445068}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08728551864624023, 'PathExpansion': 0.14670848846435547, 'AnswerExtraction': 1.8399102687835693, 'Total': 2.073904275894165}
+Question: What is the morning haze?
+Entities found: 183
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07841229438781738, 'PathExpansion': 0.10391068458557129, 'AnswerExtraction': 2.7497987747192383, 'Total': 2.932121753692627}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09379744529724121, 'PathExpansion': 0.7186696529388428, 'AnswerExtraction': 3.31414532661438, 'Total': 4.126612424850464}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07583045959472656, 'PathExpansion': 0.0263519287109375, 'AnswerExtraction': 0.37546420097351074, 'Total': 0.4776465892791748}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07202744483947754, 'PathExpansion': 0.028057098388671875, 'AnswerExtraction': 0.3126492500305176, 'Total': 0.412733793258667}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09056615829467773, 'PathExpansion': 0.04639697074890137, 'AnswerExtraction': 0.3668489456176758, 'Total': 0.5038120746612549}
+Question: Where the creator of the morning haze studied?
+Entities found: 172
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08746719360351562, 'PathExpansion': 0.04937410354614258, 'AnswerExtraction': 0.27918577194213867, 'Total': 0.4160270690917969}
+Question: Tell me some artists that the creator of Poor Cupid influenced by?
+Entities found: 472
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13266205787658691, 'PathExpansion': 0.1108694076538086, 'AnswerExtraction': 8.31545901298523, 'Total': 8.558990478515625}
+Question: Who was responsible for the hardships Belgian civilians experienced in 04/08/1914?
+Entities found: 155
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09098935127258301, 'PathExpansion': 0.8242084980010986, 'AnswerExtraction': 7.060325384140015, 'Total': 7.975523233413696}
+Question: Give me the participants of the Battle of Cuinchy
+Entities found: 287
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.3461120128631592, 'PathExpansion': 0.017701148986816406, 'AnswerExtraction': 1.0843327045440674, 'Total': 1.448145866394043}
+Question: Which is the FIRST NAME of the creator of Lumbermen's Camp?
+Entities found: 986
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.21625447273254395, 'PathExpansion': 0.1284780502319336, 'AnswerExtraction': 1.491532325744629, 'Total': 1.8362648487091064}
+Question: Which is the  ART TYPE OF Lumbermen's Camp?
+Entities found: 480
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1212923526763916, 'PathExpansion': 0.12416243553161621, 'AnswerExtraction': 1.4187781810760498, 'Total': 1.6642329692840576}
+Question: Which is the  CLASSIFICATION OF Lumbermen's Camp?
+Entities found: 370
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07975244522094727, 'PathExpansion': 0.17588567733764648, 'AnswerExtraction': 1.4161581993103027, 'Total': 1.6717963218688965}
+Question: Which is the  MATERIAL OF Lumbermen's Camp?
+Entities found: 129
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07821321487426758, 'PathExpansion': 0.11107945442199707, 'AnswerExtraction': 1.3262965679168701, 'Total': 1.5155892372131348}
+Question: what is Pablo Picasso
+Entities found: 248
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10753202438354492, 'PathExpansion': 0.06791281700134277, 'AnswerExtraction': 2.9967041015625, 'Total': 3.1721489429473877}[2023-03-26 13:11:33 +0300] [18119] [INFO] Handling signal: term
+[2023-03-26 13:11:33 +0300] [18124] [INFO] Worker exiting (pid: 18124)
+
+Total Times:  {'EntitySearch': 0.0842745304107666, 'PathExpansion': 0.020038366317749023, 'AnswerExtraction': 0.45319199562072754, 'Total': 0.5575048923492432}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09882140159606934, 'PathExpansion': 0.07010555267333984, 'AnswerExtraction': 0.3792140483856201, 'Total': 0.5481410026550293}
+Question: Which is the death place of the creator of Lumbermen's Camp?
+Entities found: 752
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09175682067871094, 'PathExpansion': 0.07291817665100098, 'AnswerExtraction': 0.41019225120544434, 'Total': 0.5748672485351562}
+Question: Where the creator of the morning haze studied?
+Entities found: 172
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08837270736694336, 'PathExpansion': 0.09535694122314453, 'AnswerExtraction': 1.0296862125396729, 'Total': 1.2134158611297607}
+Question: Where the creator of the morning haze studied?
+Entities found: 172
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08898282051086426, 'PathExpansion': 0.04571819305419922, 'AnswerExtraction': 0.9198088645935059, 'Total': 1.0545098781585693}
+Question: Tell me some artists that the creator of Chapel of the Comforter influenced by?
+Entities found: 431
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.20031404495239258, 'PathExpansion': 0.18899798393249512, 'AnswerExtraction': 2.3263745307922363, 'Total': 2.715686559677124}
+Question: In which city the creator of Poor Cupid lived?
+Entities found: 342
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09389138221740723, 'PathExpansion': 0.10016798973083496, 'AnswerExtraction': 7.555083274841309, 'Total': 7.749142646789551}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10062289237976074, 'PathExpansion': 0.11533260345458984, 'AnswerExtraction': 1.3439640998840332, 'Total': 1.5599195957183838}
+Question: Give me the participants of the Battle of Cuinchy
+Entities found: 287
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.4878830909729004, 'PathExpansion': 0.0682826042175293, 'AnswerExtraction': 3.0091795921325684, 'Total': 3.565345287322998}
+Question: Give me the participants of the Battle of Cuinchy
+Entities found: 287
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.3143956661224365, 'PathExpansion': 0.0619349479675293, 'AnswerExtraction': 2.8795762062072754, 'Total': 3.255906820297241}
+Question: Give me the participants of the Battle of Cuinchy
+Entities found: 287
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.2659335136413574, 'PathExpansion': 0.06278777122497559, 'AnswerExtraction': 1.7759771347045898, 'Total': 2.104698419570923}
+Question: Give me the participants of the Battle of Cuinchy
+Entities found: 287
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.24677300453186035, 'PathExpansion': 0.07251238822937012, 'AnswerExtraction': 2.857630729675293, 'Total': 3.1769161224365234}
+Question: In which city lived the creator of Poor Cupid?
+Entities found: 272
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11085271835327148, 'PathExpansion': 0.1126565933227539, 'AnswerExtraction': 7.91370964050293, 'Total': 8.137218952178955}
+Question: Which is the CREATION YEAR OF Lumbermen's Camp?
+Entities found: 127
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08777189254760742, 'PathExpansion': 0.12112307548522949, 'AnswerExtraction': 1.4029712677001953, 'Total': 1.6118662357330322}
+Question: what is Poor Cupid
+Entities found: 90
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08388066291809082, 'PathExpansion': 0.05335736274719238, 'AnswerExtraction': 4.783506870269775, 'Total': 4.920744895935059}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12618541717529297, 'PathExpansion': 0.1292722225189209, 'AnswerExtraction': 1.1010642051696777, 'Total': 1.3565218448638916}
+[2023-03-26 13:11:33 +0300] [18123] [INFO] Worker exiting (pid: 18123)
+
+[2023-03-26 13:11:33 +0300] [18122] [INFO] Worker exiting (pid: 18122)
+
+Entities found: 287
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.23146414756774902, 'PathExpansion': 0.07683777809143066, 'AnswerExtraction': 2.7936999797821045, 'Total': 3.102001905441284}
+Question: In which city lived the creator of Poor Cupid?
+Entities found: 272
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11128377914428711, 'PathExpansion': 0.04782724380493164, 'AnswerExtraction': 4.733121871948242, 'Total': 4.892232894897461}
+Question: In which city the creator of Poor Cupid lived?
+Entities found: 342
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12837815284729004, 'PathExpansion': 0.15302824974060059, 'AnswerExtraction': 7.757443904876709, 'Total': 8.0388503074646}
+Question: In which city the creator of Poor Cupid lived?
+Entities found: 342
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08001494407653809, 'PathExpansion': 0.05121636390686035, 'AnswerExtraction': 4.749385118484497, 'Total': 4.8806164264678955}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09845113754272461, 'PathExpansion': 0.13782215118408203, 'AnswerExtraction': 1.45796799659729, 'Total': 1.6942412853240967}
+Question: Which is the TYPE OF Lumbermen's Camp?
+Entities found: 328
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12679004669189453, 'PathExpansion': 0.11938095092773438, 'AnswerExtraction': 1.4182283878326416, 'Total': 1.6643993854522705}
+Question: Which is the  CLASSIFICATION TYPE OF Lumbermen's Camp?
+Entities found: 883
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.22784018516540527, 'PathExpansion': 0.12024712562561035, 'AnswerExtraction': 1.400235652923584, 'Total': 1.7483229637145996}
+Question: what is Poor Cupid, a painting?
+Entities found: 87
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0762631893157959, 'PathExpansion': 0.024008750915527344, 'AnswerExtraction': 1.811981201171875e-05, 'Total': 0.10029006004333496}
+Question: aristotele
+Entities found: 0
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12070083618164062, 'PathExpansion': 0.1047964096069336, 'AnswerExtraction': 11.254545211791992, 'Total': 11.480042457580566}
+[2023-03-26 13:11:33 +0300] [18119] [INFO] Shutting down: Master
+[2023-03-29 16:18:36 +0300] [45958] [INFO] Starting gunicorn 20.0.4
+[2023-03-29 16:18:36 +0300] [45958] [INFO] Listening at: http://0.0.0.0:5000 (45958)
+[2023-03-29 16:18:36 +0300] [45958] [INFO] Using worker: gevent
+[2023-03-29 16:18:36 +0300] [45961] [INFO] Booting worker with pid: 45961
+[2023-03-29 16:18:36 +0300] [45962] [INFO] Booting worker with pid: 45962
+[2023-03-29 16:18:37 +0300] [45963] [INFO] Booting worker with pid: 45963
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+[2023-03-29 21:01:43,047] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 387, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 383, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/lib/python3.6/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/lib/python3.6/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.6/http/client.py", line 289, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+http.client.RemoteDisconnected: Remote end closed connection without response
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 440, in send
+    timeout=timeout
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 639, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/usr/lib/python3/dist-packages/urllib3/util/retry.py", line 367, in increment
+    raise six.reraise(type(error), error, _stacktrace)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/six.py", line 718, in reraise
+    raise value.with_traceback(tb)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 601, in urlopen
+    chunked=chunked)
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 387, in _make_request
+    six.raise_from(e, None)
+  File "<string>", line 3, in raise_from
+  File "/usr/lib/python3/dist-packages/urllib3/connectionpool.py", line 383, in _make_request
+    httplib_response = conn.getresponse()
+  File "/usr/lib/python3.6/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/usr/lib/python3.6/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/usr/lib/python3.6/http/client.py", line 289, in _read_status
+    raise RemoteDisconnected("Remote end closed connection without"
+urllib3.exceptions.ProtocolError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 91, in api_answer
+    ignorePreviousDepth=ignorePreviousDepth,
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 61, in extend_entities
+    entities, depth, ignorePreviousDepth=ignorePreviousDepth
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 318, in expandEntitiesPath
+    subgraph = sparql_query(q_formatted, headers=headers)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 32, in sparql_query
+    response = requests.get(url, params=payload, headers=headers)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 72, in get
+    return request('get', url, params=params, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 630, in send
+    r = adapter.send(request, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/adapters.py", line 490, in send
+    raise ConnectionError(err, request=request)
+requests.exceptions.ConnectionError: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response',))
+[2023-03-29 21:02:35,463] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 182, in get_entities_from_elas4rdf
+    if "triples" not in response_json["results"]:
+KeyError: 'results'
+[2023-06-01 23:13:20,714] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-06-01 23:13:24,439] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-06-26 11:14:06,677] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-06-26 11:14:14,146] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-07-06 09:53:09,793] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-07-06 09:53:22,822] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-07-06 18:14:43,062] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-07-25 16:28:02,182] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-08-22 16:08:00,271] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-08-22 16:08:03,602] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-08-22 16:13:38 +0300] [56744] [INFO] Starting gunicorn 20.0.4
+[2023-08-22 16:13:38 +0300] [56744] [ERROR] Connection in use: ('0.0.0.0', 5000)
+[2023-08-22 16:13:38 +0300] [56744] [ERROR] Retrying in 1 second.
+[2023-08-22 16:13:39 +0300] [56744] [ERROR] Connection in use: ('0.0.0.0', 5000)
+[2023-08-22 16:13:39 +0300] [56744] [ERROR] Retrying in 1 second.
+[2023-08-22 16:13:40 +0300] [56744] [ERROR] Connection in use: ('0.0.0.0', 5000)
+[2023-08-22 16:13:40 +0300] [56744] [ERROR] Retrying in 1 second.
+[2023-08-22 16:13:41 +0300] [56744] [ERROR] Connection in use: ('0.0.0.0', 5000)
+[2023-08-22 16:13:41 +0300] [56744] [ERROR] Retrying in 1 second.
+[2023-08-22 16:13:42 +0300] [56744] [ERROR] Connection in use: ('0.0.0.0', 5000)
+[2023-08-22 16:13:42 +0300] [56744] [ERROR] Retrying in 1 second.
+[2023-08-22 16:13:43 +0300] [56744] [ERROR] Can't connect to ('0.0.0.0', 5000)
+[2023-08-22 16:14:59 +0300] [56918] [INFO] Starting gunicorn 20.0.4
+[2023-08-22 16:14:59 +0300] [56918] [INFO] Listening at: http://0.0.0.0:5001 (56918)
+[2023-08-22 16:14:59 +0300] [56918] [INFO] Using worker: gevent
+[2023-08-22 16:14:59 +0300] [56921] [INFO] Booting worker with pid: 56921
+[2023-08-22 16:14:59 +0300] [56922] [INFO] Booting worker with pid: 56922
+[2023-08-22 16:15:00 +0300] [56925] [INFO] Booting worker with pid: 56925
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+Some weights of RobertaModel were not initialized from the model checkpoint at deepset/roberta-base-squad2 and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+[2023-08-22 16:15:40,296] ERROR in app: Exception on /answer [GET]
+Traceback (most recent call last):
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/nicolaig/.local/lib/python3.6/site-packages/flask/app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 41, in api_answer
+    question, description_label="rdfs_comment"
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/entity_expansion.py", line 198, in get_entities_from_elas4rdf
+    data=init_payload)
+  File "/usr/lib/python3/dist-packages/requests/api.py", line 58, in request
+    return session.request(method=method, url=url, **kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 520, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 624, in send
+    adapter = self.get_adapter(url=request.url)
+  File "/usr/lib/python3/dist-packages/requests/sessions.py", line 715, in get_adapter
+    raise InvalidSchema("No connection adapters were found for '%s'" % url)
+requests.exceptions.InvalidSchema: No connection adapters were found for '127.0.0.1:8000/datasets'
+[2023-09-13 19:21:45 +0300] [56918] [INFO] Handling signal: term
+[2023-09-13 19:21:45 +0300] [56925] [INFO] Worker exiting (pid: 56925)
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: When happend the battle of vittorio veneto?
+Entities found: 284
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.5719926357269287, 'PathExpansion': 5.789508104324341, 'AnswerExtraction': 0.5774884223937988, 'Total': 6.938989162445068}
+[2023-09-13 19:21:45 +0300] [56921] [INFO] Worker exiting (pid: 56921)
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: When happend the battle of vittorio veneto?
+[2023-09-13 19:21:46 +0300] [56922] [INFO] Worker exiting (pid: 56922)
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: When happend the battle of vittorio veneto?
+Entities found: 284
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.38627052307128906, 'PathExpansion': 0.04676365852355957, 'AnswerExtraction': 0.3643686771392822, 'Total': 0.7974028587341309}
+[2023-09-13 19:21:46 +0300] [56918] [INFO] Shutting down: Master
+[2023-09-13 19:28:03 +0300] [9639] [INFO] Starting gunicorn 20.0.4
+[2023-09-13 19:28:03 +0300] [9639] [INFO] Listening at: http://0.0.0.0:5001 (9639)
+[2023-09-13 19:28:03 +0300] [9639] [INFO] Using worker: gevent
+[2023-09-13 19:28:03 +0300] [9643] [INFO] Booting worker with pid: 9643
+[2023-09-13 19:28:03 +0300] [9644] [INFO] Booting worker with pid: 9644
+[2023-09-13 19:28:03 +0300] [9645] [INFO] Booting worker with pid: 9645
+[2023-09-13 19:28:03 +0300] [9643] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 7, in <module>
+    from answer_extraction import AnswerExtraction
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 18
+    def
+        ^
+SyntaxError: invalid syntax
+[2023-09-13 19:28:03 +0300] [9643] [INFO] Worker exiting (pid: 9643)
+[2023-09-13 19:28:03 +0300] [9644] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 7, in <module>
+    from answer_extraction import AnswerExtraction
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 18
+    def
+        ^
+SyntaxError: invalid syntax
+[2023-09-13 19:28:03 +0300] [9644] [INFO] Worker exiting (pid: 9644)
+[2023-09-13 19:28:03 +0300] [9645] [ERROR] Exception in worker process
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+    worker.init_process()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/ggevent.py", line 162, in init_process
+    super().init_process()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/base.py", line 119, in init_process
+    self.load_wsgi()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/workers/base.py", line 144, in load_wsgi
+    self.wsgi = self.app.wsgi()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/base.py", line 67, in wsgi
+    self.callable = self.load()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/wsgiapp.py", line 49, in load
+    return self.load_wsgiapp()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/wsgiapp.py", line 39, in load_wsgiapp
+    return util.import_app(self.app_uri)
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/util.py", line 358, in import_app
+    mod = importlib.import_module(module)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/app.py", line 7, in <module>
+    from answer_extraction import AnswerExtraction
+  File "/home/nicolaig/elas4rdf-qa-cidoc-crm/answer_extraction.py", line 18
+    def
+        ^
+SyntaxError: invalid syntax
+[2023-09-13 19:28:03 +0300] [9645] [INFO] Worker exiting (pid: 9645)
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 209, in run
+    self.sleep()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 357, in sleep
+    ready = select.select([self.PIPE[0]], [], [], 1.0)
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 525, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/bin/gunicorn", line 11, in <module>
+    sys.exit(run())
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/wsgiapp.py", line 58, in run
+    WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]").run()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/base.py", line 228, in run
+    super().run()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/app/base.py", line 72, in run
+    Arbiter(self).run()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 229, in run
+    self.halt(reason=inst.reason, exit_status=inst.exit_status)
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 342, in halt
+    self.stop()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 393, in stop
+    time.sleep(0.1)
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 242, in handle_chld
+    self.reap_workers()
+  File "/usr/local/lib/python3.6/dist-packages/gunicorn/arbiter.py", line 525, in reap_workers
+    raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+[2023-09-13 19:33:29 +0300] [45958] [INFO] Handling signal: term
+[2023-09-13 19:33:29 +0300] [45963] [INFO] Worker exiting (pid: 45963)
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: "Who was born first, Lamar Dodd or Thomas Le Clear?
+Entities found: 681
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10962533950805664, 'PathExpansion': 0.07160186767578125, 'AnswerExtraction': 6.731644153594971, 'Total': 6.912871360778809}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.16388154029846191, 'PathExpansion': 0.3254687786102295, 'AnswerExtraction': 2.115480661392212, 'Total': 2.6048309803009033}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.21465229988098145, 'PathExpansion': 0.1245126724243164, 'AnswerExtraction': 2.042896032333374, 'Total': 2.382061004638672}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.17017316818237305, 'PathExpansion': 0.13290143013000488, 'AnswerExtraction': 1.7259352207183838, 'Total': 2.0290098190307617}
+Question: null
+Question: null
+Question: what countries wxperienced casualties in ww2?
+Entities found: 157
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.15952658653259277, 'PathExpansion': 0.2581768035888672, 'AnswerExtraction': 2.448260545730591, 'Total': 2.865963935852051}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12895607948303223, 'PathExpansion': 0.1878354549407959, 'AnswerExtraction': 1.58431077003479, 'Total': 1.9011023044586182}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11765432357788086, 'PathExpansion': 0.02214527130126953, 'AnswerExtraction': 0.6889679431915283, 'Total': 0.8287675380706787}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08172130584716797, 'PathExpansion': 0.0411839485168457, 'AnswerExtraction': 0.43727660179138184, 'Total': 0.5601818561553955}
+Question: what Lumbermen's Camp is made of?
+Entities found: 76
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1397111415863037, 'PathExpansion': 0.022311687469482422, 'AnswerExtraction': 0.3370232582092285, 'Total': 0.49904608726501465}
+Question: what material Lumbermen's Camp is made of?
+Entities found: 79
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08829164505004883, 'PathExpansion': 0.021919965744018555, 'AnswerExtraction': 0.31853699684143066, 'Total': 0.42874860763549805}
+Question: what material Lumbermen's Camp is made of except image?
+Entities found: 77
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.08766841888427734, 'PathExpansion': 0.0201113224029541, 'AnswerExtraction': 1.2861690521240234, 'Total': 1.3939487934112549}
+Question: what material Lumbermen's Camp is made of except image and paper?
+Entities found: 97
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1354677677154541, 'PathExpansion': 0.018642187118530273, 'AnswerExtraction': 0.9400050640106201, 'Total': 1.0941150188446045}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.0794515609741211, 'PathExpansion': 0.13711953163146973, 'AnswerExtraction': 1.1430199146270752, 'Total': 1.359591007232666}
+Question: When the events with similar time-span as the Battle of St. Quentin, 1918 took place?
+Entities found: 732
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.1804187297821045, 'PathExpansion': 0.1213831901550293, 'AnswerExtraction': 2.4163970947265625, 'Total': 2.7181990146636963}
+[2023-09-13 19:33:29 +0300] [45962] [INFO] Worker exiting (pid: 45962)
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: "Who was born first, Lamar Dodd or Thomas Le Clear?
+Entities found: 681
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.254988431930542, 'PathExpansion': 0.07711362838745117, 'AnswerExtraction': 5.015447616577148, 'Total': 5.347549676895142}
+Question: When Lamar Dodd died?
+Entities found: 530
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.12443828582763672, 'PathExpansion': 0.0673372745513916, 'AnswerExtraction': 4.9577107429504395, 'Total': 5.149486303329468}
+Question: Who created the morning haze?
+Entities found: 167
+Question: When happend the battle of vittorio veneto?
+Entities found: 284
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 1.1439683437347412, 'PathExpansion': 4.695607662200928, 'AnswerExtraction': 0.5599851608276367, 'Total': 6.399561166763306}
+Question: null
+Question: null
+Question: El Greco paintings
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13820981979370117, 'PathExpansion': 0.3366854190826416, 'AnswerExtraction': 2.2383546829223633, 'Total': 2.713249921798706}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.07894349098205566, 'PathExpansion': 0.03319573402404785, 'AnswerExtraction': 0.36966490745544434, 'Total': 0.48180413246154785}
+Question: what material Lumbermen's Camp is made of exepct image?
+Entities found: 77
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10779809951782227, 'PathExpansion': 0.02023625373840332, 'AnswerExtraction': 0.6064348220825195, 'Total': 0.7344691753387451}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.14785361289978027, 'PathExpansion': 0.031420230865478516, 'AnswerExtraction': 0.3281741142272949, 'Total': 0.5074479579925537}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09862494468688965, 'PathExpansion': 0.15418076515197754, 'AnswerExtraction': 1.4518096446990967, 'Total': 1.7046153545379639}
+Question: When the events with similar time-span as the Battle of St. Quentin, 1918 took place?
+Entities found: 732
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.21824097633361816, 'PathExpansion': 0.2045149803161621, 'AnswerExtraction': 2.610532760620117, 'Total': 3.0332887172698975}
+[2023-09-13 19:33:29 +0300] [45961] [INFO] Worker exiting (pid: 45961)
+Initializing...
+Using Device: cpu
+CIDOC-QA is Up!
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.2015058994293213, 'PathExpansion': 0.09220170974731445, 'AnswerExtraction': 5.9415693283081055, 'Total': 6.235276937484741}
+Question: When Lamar Dodd died?
+Entities found: 530
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.20467805862426758, 'PathExpansion': 0.13522934913635254, 'AnswerExtraction': 6.7830657958984375, 'Total': 7.122973203659058}
+Question: Where Lamar Dodd died?
+Entities found: 519
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.17059659957885742, 'PathExpansion': 0.06671857833862305, 'AnswerExtraction': 4.792692184448242, 'Total': 5.030007362365723}
+Question: When happend the battle of vittorio veneto?
+Question: how old Obama is
+Question: rapport de stage
+Question: hello
+Question: Who created the morning haze?
+Question: Who created the morning haze?
+Question: what countries experienced casualties in ww2?
+Entities found: 157
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09878754615783691, 'PathExpansion': 0.19786787033081055, 'AnswerExtraction': 1.9671823978424072, 'Total': 2.2638378143310547}
+Question: Which is the nationality of the creator of Lumbermen's Camp?
+Entities found: 274
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.09111499786376953, 'PathExpansion': 0.018201351165771484, 'AnswerExtraction': 0.5344030857086182, 'Total': 0.6437194347381592}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.06655383110046387, 'PathExpansion': 0.1259763240814209, 'AnswerExtraction': 1.0984506607055664, 'Total': 1.2909808158874512}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.11022615432739258, 'PathExpansion': 0.18486428260803223, 'AnswerExtraction': 1.2907135486602783, 'Total': 1.5858039855957031}
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.16132831573486328, 'PathExpansion': 0.18421626091003418, 'AnswerExtraction': 11.75580620765686, 'Total': 12.101350784301758}
+Question: Who created the morning haze?
+Entities found: 167
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.13576674461364746, 'PathExpansion': 0.1550905704498291, 'AnswerExtraction': 1.2356162071228027, 'Total': 1.5264735221862793}
+Question: When the production of Domed Building with Flags ended?
+Entities found: 300
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+SPARQL query ok
+starting answer extraction
+Total Times:  {'EntitySearch': 0.10228371620178223, 'PathExpansion': 0.15099000930786133, 'AnswerExtraction': 11.304586172103882, 'Total': 11.557859897613525}
+[2023-09-13 19:33:30 +0300] [45958] [INFO] Shutting down: Master
