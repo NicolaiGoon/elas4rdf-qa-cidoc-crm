@@ -1,7 +1,7 @@
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
 import torch
 import entity_expansion as expansion
-from boolean_question import BoolQ
+from gpt4 import gpt4
 
 
 class AnswerExtraction:
@@ -16,7 +16,7 @@ class AnswerExtraction:
         print("Using Device: " + str(device))
         self.pipeline = pipeline('question-answering',
                                  model=model_name, tokenizer=model_name)
-        self.boolean_pipeline = BoolQ()
+        self.gpt4 = gpt4() 
 
     def answer_extractive(self, question, entities, q_type="factoid"):
         print("starting answer extraction")
@@ -32,7 +32,7 @@ class AnswerExtraction:
                 )
             else:
                 output = self.pipeline(
-                    {"question": question, "context": e["text"]}) if q_type == "factoid" else self.boolean_pipeline.predict(e["text"], question)
+                    {"question": question, "context": e["text"]}) if q_type == "factoid" else self.gpt4.predict(passage=e["text"], question=question)
                 # cant find answer
                 if output == []:
                     answers.append(
@@ -41,10 +41,9 @@ class AnswerExtraction:
                     )
                 else:
                     # highlighted_text = e['text'][0:output['start']]+'<b>'+e['text'][output['start']:output['end']]+'</b>'+e['text'][output['end']:]
-                    final_answer = ("Yes" if output else "No") if isinstance(
-                        output, bool) else output["answer"]
-                    score = (self.boolean_pipeline.prediction_details()[
-                             str(output).lower()+' confidence']) if isinstance(output, bool) else round(output["score"], 3)
+                    final_answer = output if isinstance(
+                        output, str) else output["answer"]
+                    score = 0 if isinstance(output, str) else round(output["score"], 3)
                     answers.append(
                         {
                             "entity": e["uri"],
