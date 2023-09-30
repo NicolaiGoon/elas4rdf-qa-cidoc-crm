@@ -1,8 +1,7 @@
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
 import torch
 import entity_expansion as expansion
-from gpt4 import gpt4
-
+from llama2 import Llama2
 
 class AnswerExtraction:
     # This class contains methods for the answer extraction stage
@@ -16,7 +15,7 @@ class AnswerExtraction:
         print("Using Device: " + str(device))
         self.pipeline = pipeline('question-answering',
                                  model=model_name, tokenizer=model_name)
-        self.gpt4 = gpt4() 
+        self.llama2 = Llama2() 
 
     def answer_extractive(self, question, entities, q_type="factoid"):
         print("starting answer extraction")
@@ -32,7 +31,7 @@ class AnswerExtraction:
                 )
             else:
                 output = self.pipeline(
-                    {"question": question, "context": e["text"]}) if q_type == "factoid" else self.gpt4.predict(passage=e["text"], question=question)
+                    {"question": question, "context": e["text"]}) if q_type == "factoid" else self.llama2.predict(question,e["text"])
                 # cant find answer
                 if output == []:
                     answers.append(
@@ -44,6 +43,8 @@ class AnswerExtraction:
                     final_answer = output if isinstance(
                         output, str) else output["answer"]
                     score = 0 if isinstance(output, str) else round(output["score"], 3)
+                    if(q_type == "boolean"):
+                        final_answer = self.filter_boolean(final_answer)
                     answers.append(
                         {
                             "entity": e["uri"],
@@ -53,6 +54,12 @@ class AnswerExtraction:
                         }
                     )
         return sorted(answers, key=lambda k: k["score"], reverse=True)
+    
+    def filter_boolean(self,answer):
+        answer_lower = answer.lower()
+        if("yes" in answer_lower): return "Yes"
+        elif("no" in answer_lower): return "No"
+        return ""
 
     def extend_entities(
         self, entities, category, atype, depth=1, ignorePreviousDepth=False

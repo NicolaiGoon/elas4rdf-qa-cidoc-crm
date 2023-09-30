@@ -6,6 +6,7 @@ from flask import jsonify, request
 from flask_cors import CORS
 from answer_extraction import AnswerExtraction
 from entity_expansion import get_entities_from_elas4rdf
+from waitress import serve
 
 app = flask.Flask(__name__)
 CORS(app)
@@ -92,7 +93,6 @@ def api_answer():
             depth=d,
             ignorePreviousDepth=ignorePreviousDepth,
         )
-
         end = time.time()
         ea_time += end - start
 
@@ -163,4 +163,7 @@ def parse_ignore(args):
         return True if args["ignore_previous_depth"].lower() in ["1","true"] else False
     else: return False 
 
+
+if __name__ == "__main__":
+    serve(app,host='0.0.0.0',port=5000,threads=16)
 
