@@ -46,6 +46,10 @@ def api_answer():
     print("Entities found: " + str(len(entities)))
 
     question_type = args["question_type"]
+    if not question_type: question_type = "factoid" 
+
+    model = args["model"]
+    if not model: model = "roberta"
 
     """
     to improve performance when we receive a large number of entities
@@ -99,7 +103,7 @@ def api_answer():
         # Answer Extraction
         assert len(ext_entity) == 1
         start = time.time()
-        answer = ae.answer_extractive(question, ext_entity, question_type)[0]
+        answer = ae.answer_extractive(question=question,entities= ext_entity, q_type=question_type, model=model)[0]
         end = time.time()
         aexctr_time += end - start
 

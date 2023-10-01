@@ -17,7 +17,7 @@ class AnswerExtraction:
                                  model=model_name, tokenizer=model_name)
         self.llama2 = Llama2() 
 
-    def answer_extractive(self, question, entities, q_type="factoid"):
+    def answer_extractive(self, question, entities, model, q_type="factoid"):
         print("starting answer extraction")
         # Obtain a question from each given entity
         answers = []
@@ -31,7 +31,7 @@ class AnswerExtraction:
                 )
             else:
                 output = self.pipeline(
-                    {"question": question, "context": e["text"]}) if q_type == "factoid" else self.llama2.predict(question,e["text"])
+                    {"question": question, "context": e["text"]}) if model == "roberta" else self.llama2.predict(question,e["text"])
                 # cant find answer
                 if output == []:
                     answers.append(
