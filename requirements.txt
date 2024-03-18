@@ -1,4 +1,0 @@
-requests==2.22.0
-torch==1.12.1
-transformers==4.22.1
-gevent==22.10.2

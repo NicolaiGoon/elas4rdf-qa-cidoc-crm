@@ -3,3 +3,5 @@ resource_type_model
 __pycache__
 .env
 .log
+venv
+.idea
