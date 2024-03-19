@@ -46,7 +46,7 @@ def api_answer():
     print("Entities found: " + str(len(entities)))
 
     question_type = args["question_type"]
-    if not question_type: question_type = "factoid" 
+    if not question_type: question_type = "factoid"
 
     model = args["model"]
     if not model: model = "roberta"
@@ -78,7 +78,7 @@ def api_answer():
 
     except :
         return jsonify({"error":"error in parameters"})
-        
+
     # change the depth array in order to expand each depth for each entity
     # depth 1 2 3 4
     answers = []
@@ -156,16 +156,16 @@ def parse_depth(args):
 def parse_threshold(args):
     if "threshold" in args:
         try:
-            threshold = float(args["threshold"]) 
+            threshold = float(args["threshold"])
             return threshold
         except:
             return False
-    return False 
+    return False
 
 def parse_ignore(args):
     if "ignore_previous_depth" in args:
         return True if args["ignore_previous_depth"].lower() in ["1","true"] else False
-    else: return False 
+    else: return False
 
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import json
 import re
 import copy
 import time
-from itertools import groupby,permutations
+from itertools import groupby, permutations
 from dotenv import load_dotenv
 
 """
@@ -20,6 +20,7 @@ load_dotenv()
 
 SPARQL_IP = os.getenv('SPARQL_IP')
 ELAS4RDF_SEARCH_IP = os.getenv('ELAS4RDF_SEARCH_IP')
+
 
 def sparql_query(query_string, headers="application/json"):
     # Execute a query on a SPARQL endpoint
@@ -39,33 +40,6 @@ def sparql_query(query_string, headers="application/json"):
         print(response)
         results = []
     return results
-
-
-def resource_sentences(entity_uri, type_uri):
-    """Find subjects of the entity that match the answer type
-    and generate sentences of the form "entity predicate label answer"
-    """
-    sentences = []
-    query_string_o = (
-        "PREFIX skos: <http://www.w3.org/2004/02/skos/core#>"
-        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-        "select distinct str(?pl) as ?pLabel ?a where {{"
-        "<{0}> ?p ?a . "
-        "?p rdfs:label ?pl . "
-        "<{1}> owl:equivalentClass ?eq . "
-        "?a rdf:type ?eq . "
-        "FILTER(lang(?pl) = 'en' || lang(?pl) = '') "
-        "}}"
-    ).format(entity_uri, type_uri)
-    response = sparql_query(query_string_o)
-
-    if len(response) > 20:
-        response = response[0:20]
-    for r in response:
-        sentences.append(
-            entity_to_str(entity_uri) + " " + r["pLabel"] + " " + entity_to_str(r["a"])
-        )
-    return sentences
 
 
 def literal_sentences(entity_uri, literal_type):
@@ -159,7 +133,7 @@ def literal_sentences(entity_uri, literal_type):
 
 def entity_to_str(e):
     # Convert a dbpedia uri to a readable string
-    return e[e.rindex("/") + 1 :].replace("_", " ")
+    return e[e.rindex("/") + 1:].replace("_", " ")
 
 
 def get_entities_from_elas4rdf(query, description_label, size=1000):
@@ -191,15 +165,14 @@ def get_entities_from_elas4rdf(query, description_label, size=1000):
                 "rdfs_comment_sub": 1,
                 "rdfs_label_sub": 1
             }
-            })
+        })
         response_init = requests.request("POST",
-            ELAS4RDF_SEARCH_IP+"/datasets",
-            headers={'Content-Type': 'application/json'},
-            data=init_payload)
+                                         ELAS4RDF_SEARCH_IP + "/datasets",
+                                         headers={'Content-Type': 'application/json'},
+                                         data=init_payload)
         assert response_init.status_code == 200
         response = requests.get(url, params=payload, headers=headers)
         response_json = response.json()
-
 
     try:
         triples = response_json["results"]["triples"]
@@ -236,7 +209,7 @@ def get_entities_from_elas4rdf(query, description_label, size=1000):
 
 
 def expandEntitiesPath(
-    entities, depth=1, isGraphDB=True, ignorePreviousDepth=False, filterIdentifier=False
+        entities, depth=1, isGraphDB=True, ignorePreviousDepth=False, filterIdentifier=False
 ):
     """
     Expands entity description with triples derived from the entity path
@@ -340,7 +313,7 @@ def cidoc_uri_to_str(e):
     """
     Convert a cidoc-crm uri to a readable string
     """
-    strip_prefix = re.sub(r"^[A-Za-z0-9]*_", "", e[e.rindex("/") + 1 :])
+    strip_prefix = re.sub(r"^[A-Za-z0-9]*_", "", e[e.rindex("/") + 1:])
     return strip_prefix.replace("_", " ")
 
 
@@ -370,69 +343,6 @@ def cidoc_uri_to_str(e):
 #     for key in labelDict:
 #         text = text.replace(key,labelDict[key])
 #     return re.sub(r'\s{2,}',' ',text).replace(" .",".")
-
-
-def cidocGraphToText(g, labelName="prefLabel"):
-    """
-    Converts a cidoc-crm subgraph to text by connecting the triples and replacing ids with labels
-    json-ld
-    """
-    # map uri to label
-    labelDict = dict()
-    # final text
-    text = ""
-    print(g)
-    if "@graph" not in g:
-        return text
-    for node in g["@graph"]:
-        uri = node["@id"]
-        label = node[labelName]
-        if isinstance(label, list):
-            label = label[0]
-        if isinstance(label, dict):
-            label = label["@value"]
-        labelDict[uri] = label
-        for predicate in node.keys():
-            if predicate != "@id" and predicate != labelName:
-                objUri = node[predicate]
-                if isinstance(objUri, list):
-                    objUriText = ""
-                    for x in objUri:
-                        if isinstance(x, dict):
-                            objUriText += x["@value"] + ", "
-                        else:
-                            objUriText += x + ", "
-                    # replace last comma and replace the previous one with an "and"
-                    objUriText = " and ".join(objUriText[:-2].rsplit(",", 1))
-                    text += (
-                        " "
-                        + uri
-                        + " "
-                        + cidoc_uri_to_str(
-                            "http://www.cidoc-crm.org/cidoc-crm/" + predicate
-                        )
-                        + " "
-                        + objUriText
-                        + "."
-                    )
-                else:
-                    text += (
-                        " "
-                        + uri
-                        + " "
-                        + cidoc_uri_to_str(
-                            "http://www.cidoc-crm.org/cidoc-crm/" + predicate
-                        )
-                        + " "
-                        + objUri
-                        + "."
-                    )
-    # replace id with label
-    # print(labelDict)
-    for key in labelDict:
-        text = text.replace(key, labelDict[key])
-    return re.sub(r"\s{2,}", " ", text).replace(" .", ".")
-
 
 def triples_to_text(triples):
     separator = ". "
@@ -478,18 +388,9 @@ def graph_to_triples(g, ignorePreviousDepth=False, depth=0):
             # if one property of the triple is empty skip it
             if not subject or not obj or not predicate:
                 continue
-            triples.append(re.sub(r"\s{2,}", " ",subject + " " + predicate + " " + obj))
+            triples.append(re.sub(r"\s{2,}", " ", subject + " " + predicate + " " + obj))
         # remove dublicates
-        return [t for i,t in enumerate(triples) if triples.index(t) == i]
+        return [t for i, t in enumerate(triples) if triples.index(t) == i]
     except Exception as err:
         print(err)
         return []
-
-def compute_linear_orderings(triples):
-    print(triples)
-    possible_orders = permutations(triples)
-    orders = []
-    for order in possible_orders:
-        orders.append("".join([str(o) + ". " for o in order]))
-
-    return orders

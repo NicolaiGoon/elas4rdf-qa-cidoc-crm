@@ -1,7 +1,7 @@
-from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
+from transformers import pipeline
 import torch
 import entity_expansion as expansion
-from llama2 import Llama2
+from src.question_answering.llama2AnswerExtraction import Llama2
 
 class AnswerExtraction:
     # This class contains methods for the answer extraction stage
