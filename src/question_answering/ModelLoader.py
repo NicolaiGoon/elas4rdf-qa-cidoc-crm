@@ -1,7 +1,10 @@
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer, pipeline
+import logging
 
 
 class ModelLoader():
+
+    LOG = logging.getLogger(__name__)
 
     def __init__(self, model_name):
         self.model_name = model_name
@@ -23,8 +26,15 @@ class ModelLoader():
         return tokenizer
 
     def get_qa_pipeline(self) -> pipeline:
-        self.__download_model()
-        model = self.__load_qa_model()
-        tokenizer = self.__load_qa_tokenizer()
+        try:
+            model = self.__load_qa_model()
+            tokenizer = self.__load_qa_tokenizer()
+            print("Model has been loaded")
+        except Exception as e:
+            print("Failed to obtain model")
+            print("Starting downloading")
+            self.__download_model()
+            model = self.__load_qa_model()
+            tokenizer = self.__load_qa_tokenizer()
         qa_pipeline = pipeline("question-answering", model=model, tokenizer=tokenizer)
         return qa_pipeline

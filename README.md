@@ -1,27 +1,16 @@
-# Question Answering (QA) Component of Elas4RDF
+# Question Answering (QA) Component of Elas4RDF elevated to answer question on cidoc-crm KGs
 
 ### Overview
 
-![overview](overview.png)
+This is a FAST API service that implements the QA pipeline proposed in the following image
+![pipeline](./steps_components.png)
 
-This repository contains code for the Question Answering Component of Elas4RDF.
+to Run:
+```shell
+uvicorn src.app:app --host=0.0.0.0 --port=5000
+```
 
-It is used to provide answers for the QA tab of Elas4RDF ([demo available here](https://demos.isl.ics.forth.gr/elas4rdf)), but it can be used as a REST API as well.
-
-Endpoint: `/answer`, Parameter: `question`, Example: `/answer?question=who is the father of Obama?`
-
-Requirements:
-1.	python 3
-2.	pip 3
-3.	pip modules in requirements.txt (install with: `pip3 install -r requirements.txt`)
-4.	model files ([download here](https://drive.google.com/drive/folders/1-oGWdh5Zbl9bF_BpyXd__beJRAiyg-Ug?usp=sharing) to /resources folder)
-
-To start:
-1. development server: `flask run --host=0.0.0.0`
-2. production server: `gunicorn IP:PORT --workers 1 --limit-request-line 0 app:app --daemon --error-logfile gunicorn_error.log --timeout 120`
-
-### Publication
-
-C. Nikas, P. Fafalios and Y. Tzitzikas,
-[Open Domain Question Answering over Knowledge Graphs using Keyword Search, Answer Type Prediction, SPARQL and Pre-trained Neural Models](http://users.ics.forth.gr/~tzitzik/publications/Tzitzikas_2021_ISWC-QA.pdf) ,
-International Semantic Web Conference (ISWC) 2021 
+curl:
+```shell
+curl --location 'http://localhost:5000/answer?question=who%20created%20the%20morning%20haze%3F&depth=All&threshold=0.7&ignore_previous_depth=true&model=roberta'
+```
