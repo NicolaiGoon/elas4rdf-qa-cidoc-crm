@@ -43,13 +43,18 @@ class Elas4rdfClient():
         params = {"id": index_id, "query": query, "size": str(size)}
 
         headers = {"Accept": "application/json"}
-        response = requests.get(url, params=params, headers=headers)
 
+        # first try
+        response = requests.get(url, params=params, headers=headers)
         response_json = response.json()
 
         # init index
         if "triples" not in response_json["results"]:
             self.__initialize_index()
+
+            # second try
+            response = requests.get(url, params=params, headers=headers)
+            response_json = response.json()
 
         try:
             triples = response_json["results"]["triples"]
