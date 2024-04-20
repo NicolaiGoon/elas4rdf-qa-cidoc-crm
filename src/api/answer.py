@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, IntEnum
 
 from fastapi import APIRouter
 
@@ -10,12 +10,13 @@ from src.question_answering.TrasnformerAnswerExtraction import TransformerAnswer
 from src.question_answering.llama2AnswerExtraction import Llama2
 from src.model.QAResponse import QAResponse
 
-class depth_enum(Enum):
+
+class depth_enum(IntEnum):
     ONE = 1
     TWO = 2
     THREE = 3
     FOUR = 4
-    ALL = "All"
+    ALL = 5
 
 
 class model_enum(Enum):
@@ -41,11 +42,12 @@ elas4rdf_client = Elas4rdfClient()
 graphdb_client = GraphDBClient()
 entity_expansion = EntityExpander(graphdb_client)
 
+
 @router.get("/")
 async def get_answer(
         question: str,
         entity: str = None,
-        depth: depth_enum = depth_enum.ONE,
+        depth: depth_enum = depth_enum.ONE.value,
         threshold: float = 1.0,
         ignore_previous_depth: bool = False,
         model: model_enum = model_enum.ROBERTA,
@@ -55,7 +57,7 @@ async def get_answer(
         query=question,
         description_label="rdfs_comment")[:1]
 
-    if depth == depth_enum.ALL:
+    if depth == depth_enum.ALL.value:
         depths = [1, 2, 3, 4]
     else:
         depths = [depth.value]
